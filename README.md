@@ -1,141 +1,144 @@
 # Scampi 🦐 — Scam detector for Indonesia, as a Hermes Agent plugin
 
-Scampi menerima pesan yang dicurigai, link, nomor rekening, nomor telepon, atau
-screenshot, lalu menjawab dengan **penilaian risiko + alasan yang bisa
-diverifikasi + langkah yang disarankan**, dalam Bahasa Indonesia.
+Scampi takes a suspicious message, link, bank account number, phone number, or
+screenshot and answers with a **risk verdict + verifiable reasons + recommended
+actions**, in Bahasa Indonesia.
 
-Verdict-nya **bukan** dari perasaan model: ia dihitung dari bukti teknis
-(daftar blokir, umur domain via RDAP, typosquatting, allowlist domain resmi),
-basis pola penipuan Indonesia yang dikurasi, dan laporan komunitas.
-**Aturan yang memutuskan; model yang mengekstrak dan menjelaskan.**
+The verdict does **not** come from the model's gut feeling: it is computed from
+technical evidence (blocklists, domain age via RDAP, typosquatting, official
+domain allowlist), a curated knowledge base of Indonesian scam patterns, and
+community reports.
+**Rules decide; the model extracts and explains.**
 
-## Fitur (MVP v1)
+## Features (MVP v1)
 
-| ID  | Fitur                                                                                           |
+| ID  | Feature                                                                                         |
 | --- | ----------------------------------------------------------------------------------------------- |
-| F1  | Cek pesan teks (termasuk pesan diteruskan)                                                      |
-| F2  | Cek link: Google Safe Browsing, URLhaus, umur domain (RDAP), heuristik lokal                    |
-| F3  | Cek screenshot (via vision Hermes → transkripsi → F1)                                           |
-| F4  | Cek rekening/nomor: basis laporan komunitas ("pernah dilaporkan", bukan "penipu")               |
-| F5  | Verdict 3 tingkat — tidak ditemukan tanda bahaya / perlu hati-hati / kemungkinan besar penipuan |
-| F6  | Panduan tindakan per pola penipuan                                                              |
-| F7  | Lapor penipuan (dengan referensi bukti)                                                         |
-| F8  | Feedback akurasi verdict lewat bahasa natural                                                   |
+| F1  | Check text messages (including forwarded messages)                                              |
+| F2  | Check links: Google Safe Browsing, URLhaus, domain age (RDAP), local heuristics                  |
+| F3  | Check screenshots (via Hermes vision → transcription → F1)                                      |
+| F4  | Check accounts/numbers: community report database ("has been reported", never "is a scammer")   |
+| F5  | Three-level verdict — no warning signs found / use caution / likely scam                         |
+| F6  | Action guidance per scam pattern                                                                |
+| F7  | Report a scam (with evidence reference)                                                         |
+| F8  | Feedback on verdict accuracy in natural language                                                |
 
-## Cara verdict dibentuk
+## How a verdict is formed
 
-Setiap sinyal menyumbang bobot (lihat `data/rules.yaml`); totalnya jatuh ke
-ambang batas yang bisa diatur:
+Every signal contributes a weight (see `data/rules.yaml`); the total falls into
+configurable thresholds:
 
-| Sinyal                                                    | Bobot |
-| --------------------------------------------------------- | ----- |
-| Link terdaftar di daftar blokir (Safe Browsing / URLhaus) | 8     |
-| Link mengarah ke file APK                                 | 7     |
-| Rekening/nomor dilaporkan ≥3 pengguna independen + bukti  | 7     |
-| Mengaku brand, domain bukan milik resmi / typosquatting   | 5     |
-| Domain berumur < 30 hari                                  | 5     |
-| Meminta OTP/PIN/data kartu                                | 5     |
-| Cocok pola penipuan kuat                                  | 4     |
-| Pernah dilaporkan (belum terverifikasi)                   | 3     |
-| Bahasa mendesak/ancaman (2+ penanda)                      | 2     |
-| TLD berisiko / URL shortener                              | 1.5   |
+| Signal                                                    | Weight |
+| --------------------------------------------------------- | ------ |
+| Link listed in a blocklist (Safe Browsing / URLhaus)      | 8      |
+| Link points to an APK file                                | 7      |
+| Account/number reported by ≥3 independent users + evidence| 7      |
+| Claims a brand, domain is not the official one / typosquatting | 5  |
+| Domain younger than 30 days                               | 5      |
+| Requests OTP/PIN/card details                             | 5      |
+| Matches a strong scam pattern                             | 4      |
+| Previously reported (not yet verified)                    | 3      |
+| Urgent/threatening language (2+ markers)                  | 2      |
+| Risky TLD / URL shortener                                 | 1.5    |
 
-Ambang default: **≥3 perlu hati-hati**, **≥6 kemungkinan besar penipuan**.
-Semua bisa dikalibrasi ulang lewat harness evaluasi (lihat
+Default thresholds: **≥3 use caution**, **≥6 likely scam**.
+All of them can be recalibrated with the evaluation harness (see
 `docs/curation-runbook.md`).
 
-## Kebutuhan
+## Requirements
 
-- **Hermes Agent** (mendukung directory plugin)
+- **Hermes Agent** (with directory plugin support)
 - **Python 3.9+**
-- Opsional: `SAFE_BROWSING_API_KEY` (Google) dan `URLHAUS_AUTH_KEY` (abuse.ch).
-  Tanpa keduanya, cek link tetap jalan (RDAP + heuristik lokal) dan verdict
-  menyatakan sumber mana yang di-skip — plugin tidak pernah pura-pura "bersih".
+- Optional: `SAFE_BROWSING_API_KEY` (Google) and `URLHAUS_AUTH_KEY` (abuse.ch).
+  Without either key, link checks still run (RDAP + local heuristics) and the
+  verdict states which sources were skipped — the plugin never pretends things
+  are "clean".
 
-## Instalasi
+## Installation
 
 ```bash
 hermes plugins install <owner>/<repo>
 ```
 
-Atau, dari checkout lokal:
+Or, from a local checkout:
 
 ```bash
 ./install.sh
 ```
 
-Setelah terpasang: isi kunci opsional (lihat `docs/credentials.md`), lalu cek
-`/scampi status` di chat atau `hermes scampi status` di terminal.
+Once installed: fill in the optional keys (see `docs/credentials.md`), then
+check `/scampi status` in chat or `hermes scampi status` in the terminal.
 
-## Contoh penggunaan
+## Usage examples
 
-- **Pesan diteruskan:** user meneruskan SMS "Akun BCA Anda diblokir..." →
-  Scampi menjawab verdict + alasan + tindakan.
-- **Link:** `bca-klik-promo.xyz` → domain bukan milik BCA, umur domain, status
-  daftar blokir.
-- **Rekening:** nomor rekening + bank → "pernah dilaporkan N pengguna
-  (terakhir ...)" atau "belum pernah dilaporkan — bukan berarti aman".
-- **Screenshot:** user kirim foto SMS penipuan → model mentranskripsi, Scampi
-  menilai.
-- **Lapor:** "saya mau lapor nomor ini" → `scampi_report` → status
-  "belum terverifikasi".
+- **Forwarded message:** the user forwards an SMS "Akun BCA Anda diblokir..."
+  ("Your BCA account is blocked...") → Scampi replies with the verdict, reasons,
+  and actions.
+- **Link:** `bca-klik-promo.xyz` → domain is not owned by BCA, domain age,
+  blocklist status.
+- **Account:** account number + bank → "reported by N users (last ...)" or
+  "never reported — which does not mean it is safe".
+- **Screenshot:** the user sends a photo of a scam SMS → the model transcribes
+  it and Scampi assesses it.
+- **Report:** "I want to report this number" → `scampi_report` → status
+  "unverified".
 
-## Privasi (ringkas)
+## Privacy (summary)
 
-- Isi pesan **tidak disimpan** setelah analisis; tabel `checks` hanya menyimpan
-  hash + verdict.
-- OTP/PIN/NIK/nomor kartu di-redaksi sebelum payload dikirim ke LLM
-  (middleware `llm_request`) dan sebelum catatan disimpan.
-- Identitas pelapor disimpan sebagai HMAC; retensi bukti otomatis
-  (default 90 hari). Detail: `docs/privacy-retention.md`.
+- Message content is **not stored** after analysis; the `checks` table keeps
+  only a hash + verdict.
+- OTP/PIN/NIK/card numbers are redacted before the payload is sent to the LLM
+  (the `llm_request` middleware) and before notes are stored.
+- Reporter identity is stored as an HMAC; evidence retention is automatic
+  (default 90 days). Details: `docs/privacy-retention.md`.
 
-## Pengembangan
+## Development
 
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install pytest pyyaml ruff
-.venv/bin/python -m pytest          # 105 tes
+.venv/bin/python -m pytest          # 105 tests
 .venv/bin/ruff check .
 ```
 
-Evaluasi korpus berlabel (JSONL: `{"text": ..., "label": "scam"|"legit"}`):
+Labelled corpus evaluation (JSONL: `{"text": ..., "label": "scam"|"legit"}`):
 
 ```bash
 hermes scampi eval run --dataset tests/fixtures/scam_messages.jsonl
 ```
 
-Metrik seed corpus saat ini: **scam recall 100% (20/20), false positive 0%
+Current seed corpus metrics: **scam recall 100% (20/20), false positive 0%
 (0/20)**.
 
-## Struktur
+## Layout
 
 ```
-plugin.yaml            Manifest Hermes (tools, hooks, settings, env opsional)
+plugin.yaml            Hermes manifest (tools, hooks, settings, optional env)
 __init__.py            register(ctx): tools, hooks, middleware, commands, skill
-core/checks/           Mesin deteksi deterministik
-  analysis.py          Orkestrasi: ekstraksi → sinyal → skor → payload verdict
-  extraction.py        URL/telepon/rekening/penanda teks (deterministik)
-  redaction.py         Redaksi OTP/PIN/NIK/kartu (satu implementasi bersama)
-  allowlist.py         Cocokkan brand vs domain resmi (typosquat & mismatch)
-  patterns.py          Muat/validasi/match pola penipuan YAML
-  rules.py             Aturan skor dari rules.yaml
-  scoring.py           Bobot, ambang, dan sinyal penilaian
-  verdict.py           Teks verdict Bahasa Indonesia
-  domains.py           Utilitas domain (registrable domain, edit distance)
-  linkcheck.py, rdap.py Provider jaringan dengan timeout + degradasi
-  eval.py              Harness evaluasi korpus
-core/store/            SQLite: laporan, bukti, feedback, cache, rate limit
+core/checks/           Deterministic detection engine
+  analysis.py          Orchestration: extraction → signals → score → verdict payload
+  extraction.py        URL/phone/account/text-marker extraction (deterministic)
+  redaction.py         OTP/PIN/NIK/card redaction (one shared implementation)
+  allowlist.py         Match brand against official domains (typosquat & mismatch)
+  patterns.py          Load/validate/match YAML scam patterns
+  rules.py             Scoring rules from rules.yaml
+  scoring.py           Weights, thresholds, and scoring signals
+  verdict.py           Bahasa Indonesia verdict text
+  domains.py           Domain utilities (registrable domain, edit distance)
+  linkcheck.py, rdap.py Network providers with timeout + degradation
+  eval.py              Corpus evaluation harness
+core/store/            SQLite: reports, evidence, feedback, cache, rate limit
   store.py, reports.py, identity.py, rate_limit.py
-core/config/           Resolusi pengaturan: settings.py, config_file.py
-core/hermes/           Glue host Hermes
+core/config/           Settings resolution: settings.py, config_file.py
+core/hermes/           Hermes host glue
   tools.py, hooks.py, commands.py, runtime.py, schemas.py
-core/about.py          Sumber tunggal versi plugin
-data/                   rules.yaml, allowlist.yaml, patterns/*.yaml
-skills/scampi/          SKILL.md + referensi (template, nada, glosarium)
-tests/                  105 tes + korpus 20 scam / 20 legit
-docs/                  Instalasi, konfigurasi, kredensial, kurasi, privasi, ops
+core/about.py          Single source of truth for the plugin version
+data/                  rules.yaml, allowlist.yaml, patterns/*.yaml
+skills/scampi/         SKILL.md + references (templates, tone, glossary)
+tests/                 105 tests + corpus of 20 scam / 20 legit
+docs/                  Installation, configuration, credentials, curation, privacy, ops
 ```
 
-## Lisensi
+## License
 
-MIT — lihat `LICENSE`.
+MIT — see `LICENSE`.

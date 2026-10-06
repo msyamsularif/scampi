@@ -1,62 +1,62 @@
-# Privasi & retensi
+# Privacy & retention
 
-## Yang disimpan
+## What is stored
 
-| Data           | Disimpan di             | Isi                                                                 |
+| Data           | Stored in               | Contents                                                            |
 | -------------- | ----------------------- | ------------------------------------------------------------------- |
-| Riwayat cek    | tabel `checks`          | **hash** input + verdict + skor + waktu (tanpa isi pesan)           |
-| Laporan        | tabel `reports`         | entitas ternormalisasi, bank, hash pelapor (HMAC), pattern, catatan |
-| Bukti          | tabel `report_evidence` | **referensi** (nama file/link) — isi file tidak dibaca              |
-| Feedback       | tabel `feedback`        | check_id, verdict, akurasi, catatan teredaksi                       |
-| Cache provider | `link_cache`            | hasil RDAP/Safe Browsing/URLhaus (TTL 24 jam)                       |
-| Rate limit     | `rate_limits`           | key identitas, bucket, jendela, hitungan                            |
+| Check history  | `checks` table          | **hash** of the input + verdict + score + time (no message content) |
+| Reports        | `reports` table         | normalized entity, bank, reporter hash (HMAC), pattern, note       |
+| Evidence       | `report_evidence` table | **references** (file name/link) — file contents are never read      |
+| Feedback       | `feedback` table        | check_id, verdict, accuracy, redacted note                          |
+| Provider cache | `link_cache`            | RDAP/Safe Browsing/URLhaus results (24-hour TTL)                    |
+| Rate limit     | `rate_limits`           | identity key, bucket, window, count                                 |
 
-Isi pesan mentah **tidak pernah** disimpan; pencocokan laporan memakai nilai
-ternormalisasi (digit rekening / domain registrable).
+Raw message content is **never** stored; report matching uses normalized values
+(account digits / registrable domain).
 
-## Redaksi (dua lapis)
+## Redaction (two layers)
 
-1. **Sebelum LLM** — middleware `llm_request` menimpa payload keluar:
-   OTP, PIN, NIK (16 digit), dan nomor kartu (pola 4-4-4-4) diganti marker
-   `[REDACTED_*]`. Bisa dimatikan (`redact_before_llm: false`) hanya untuk
-   debug.
-2. **Sebelum simpan** — `sanitize_note` men-redaksi catatan laporan dan
-   memotong panjangnya.
+1. **Before the LLM** — the `llm_request` middleware rewrites the outgoing
+   payload: OTP, PIN, NIK (16 digits), and card numbers (4-4-4-4 pattern) are
+   replaced with `[REDACTED_*]` markers. Can be disabled
+   (`redact_before_llm: false`) for debugging only.
+2. **Before storage** — `sanitize_note` redacts report notes and truncates
+   their length.
 
-Angka rekening dan nominal sengaja **tidak** diredaksi — itu bukti yang
-diperiksa. Masking tampilan (`****7890`) dipakai di semua keluaran.
+Account numbers and amounts are deliberately **not** redacted — they are the
+evidence being checked. Display masking (`****7890`) is used in all output.
 
-## Identitas
+## Identity
 
-- Pelapor disimpan sebagai **HMAC-SHA256** dari kunci acak per-profil; kunci
-  di plugin state. Identitas asli tidak pernah masuk basis data.
-- Rate limit memakai identitas milik host (user/session) — lihat
-  `core/store/identity.py`; fallback per-sesi bila host tidak mengekspos user id.
-- Catatan: riwayat percakapan Hermes sendiri diatur oleh konfigurasi host —
-  plugin tidak mengubah retensi sesi host.
+- Reporters are stored as an **HMAC-SHA256** of a per-profile random key; the
+  key lives in plugin state. Real identities never enter the database.
+- Rate limiting uses the host's identity (user/session) — see
+  `core/store/identity.py`; it falls back to per-session when the host does not
+  expose a user id.
+- Note: Hermes conversation history itself is governed by the host
+  configuration — the plugin does not change host session retention.
 
-## Retensi
+## Retention
 
 `hermes scampi retention purge [--days N]` (default `retention_days: 90`)
-menghapus:
+deletes:
 
-- baris `report_evidence` lebih tua dari N hari;
-- baris `checks` dan `feedback` lebih tua dari N hari;
-- **catatan** pada laporan lama (baris laporan tetap, sebagai nilai komunitas);
-- cache kedaluwarsa dan jendela rate limit lama;
-- file di `plugin-data/scampi/evidence/` lebih tua dari N hari.
+- `report_evidence` rows older than N days;
+- `checks` and `feedback` rows older than N days;
+- **notes** on old reports (the report rows stay, as community signal);
+- expired cache entries and old rate-limit windows;
+- files in `plugin-data/scampi/evidence/` older than N days.
 
-Jalur "hapus data saya": operator menjalankan
-`hermes scampi retention purge --days 0` (menghapus semua artefak yang
-tunduk retensi), lalu menghapus baris laporan spesifik bila diminta —
-dilakukan manual oleh operator, bukan oleh model.
+"Delete my data" path: the operator runs
+`hermes scampi retention purge --days 0` (deleting every artifact subject to
+retention), then deletes specific report rows if requested — done manually by
+the operator, not by the model.
 
-## Kepatuhan
+## Compliance
 
-- Review terhadap UU PDP dan risiko pencemaran nama baik (defamasi)
-  **wajib** sebelum peluncuran publik — konsultasikan ke ahli hukum
-  (catatan spec §11).
-- Setiap verdict memuat disclaimer "penilaian otomatis, bukan keputusan
-  hukum"; label entitas memakai "pernah dilaporkan".
-- Kanal sengketa: pemilik entitas dapat menyanggah; operator mengubah status
-  laporan menjadi `disputed`, tanpa mengungkap identitas pelapor.
+- A review against Indonesia's PDP law (UU PDP) and defamation risk is
+  **mandatory** before public launch — consult legal counsel (spec note §11).
+- Every verdict carries the disclaimer "automated assessment, not a legal
+  decision"; entity labels use "has been reported".
+- Dispute channel: entity owners can contest; operators change the report
+  status to `disputed`, without ever revealing reporter identities.

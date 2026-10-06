@@ -1,34 +1,36 @@
-# Kredensial
+# Credentials
 
-Scampi berjalan tanpa kunci API apa pun. Kunci hanya menambah kekuatan
-deteksi; ketiadaannya selalu dinyatakan di verdict.
+Scampi runs without any API keys. Keys only add detection strength; their
+absence is always stated in the verdict.
 
 ## Google Safe Browsing API key
 
-1. Buka Google Cloud Console, buat/pilih project.
-2. **APIs & Services → Library** → cari "Safe Browsing API" → **Enable**.
+1. Open Google Cloud Console, create/select a project.
+2. **APIs & Services → Library** → search for "Safe Browsing API" → **Enable**.
 3. **APIs & Services → Credentials → Create credentials → API key**.
-4. Simpan sebagai `SAFE_BROWSING_API_KEY` (Hermes secret/env).
+4. Store it as `SAFE_BROWSING_API_KEY` (Hermes secret/env).
 
-- Kuota gratis; cukup untuk beta. Pembatasan: pasang application restriction
-  bila kunci dipakai hanya untuk layanan ini.
-- Tanpa kunci: sumber ini di-skip, verdict menulis
-  "Google Safe Browsing tidak aktif (API key belum diisi)".
+- Free quota; enough for beta. Restriction: set an application restriction if
+  the key is used only for this service.
+- Without the key: this source is skipped and the verdict says
+  "Google Safe Browsing tidak aktif (API key belum diisi)" — inactive, key not
+  set.
 
 ## abuse.ch URLhaus Auth-Key
 
-1. Buat akun di <https://auth.abuse.ch/>.
-2. Salin **Auth-Key** dari halaman profil.
-3. Simpan sebagai `URLHAUS_AUTH_KEY`.
+1. Create an account at <https://auth.abuse.ch/>.
+2. Copy the **Auth-Key** from the profile page.
+3. Store it as `URLHAUS_AUTH_KEY`.
 
-- URLhaus gratis untuk keperluan keamanan/komunitas; **verifikasi ToS dan
-  kuota terbaru** sebelum pemakaian intensif.
-- Tanpa kunci: sumber ini di-skip dengan catatan eksplisit di verdict.
+- URLhaus is free for security/community use; **verify the current ToS and
+  quota** before intensive use.
+- Without the key: this source is skipped with an explicit note in the verdict.
 
-## Aturan penyimpanan
+## Storage rules
 
-- Nilai kunci **tidak pernah** ditulis ke `plugin.yaml`, kode, atau basis data.
-- Di Hermes: simpan lewat config UI/secret store (`~/.hermes/.env`); plugin
-  hanya membaca dari environment variable.
-- Rotasi: ganti nilai di Hermes, restart sesi; tidak perlu menyentuh plugin.
-- `.env.example` hanya berisi nama variabel, tanpa nilai.
+- Key values are **never** written to `plugin.yaml`, code, or the database.
+- In Hermes: store them through the config UI/secret store (`~/.hermes/.env`);
+  the plugin only reads from environment variables.
+- Rotation: change the value in Hermes, restart the session; no need to touch
+  the plugin.
+- `.env.example` contains variable names only, never values.

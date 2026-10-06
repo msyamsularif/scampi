@@ -1,38 +1,38 @@
-# Sumber data
+# Data sources
 
-Semua sumber jaringan bersifat _read-only_ terhadap data target dan berjalan
-dengan timeout masing-masing. Kegagalan satu sumber tidak menggagalkan
-verdict — nilainya digantikan catatan "tidak terjangkau/di-skip".
+All network sources are _read-only_ against target data and run with their own
+timeout. One source failing never fails the verdict — its contribution is
+replaced by an "unreachable/skipped" note.
 
-| Sumber                  | Menjawab                                | Auth                    | Tanpa kunci / gagal                                    |
-| ----------------------- | --------------------------------------- | ----------------------- | ------------------------------------------------------ |
-| RDAP (`rdap.org`)       | Umur domain (tanggal registrasi)        | tanpa kunci             | status "tidak terjangkau"; verdict menyebut RDAP gagal |
-| Google Safe Browsing v4 | URL ada di daftar ancaman Google?       | `SAFE_BROWSING_API_KEY` | sumber di-skip + catatan                               |
-| abuse.ch URLhaus        | URL pernah dilaporkan malware/phishing? | `URLHAUS_AUTH_KEY`      | sumber di-skip + catatan                               |
+| Source                  | Answers                                        | Auth                    | Without key / on failure                                  |
+| ----------------------- | ---------------------------------------------- | ----------------------- | --------------------------------------------------------- |
+| RDAP (`rdap.org`)       | Domain age (registration date)                 | no key                  | status "unreachable"; the verdict mentions the RDAP failure |
+| Google Safe Browsing v4 | Is the URL on Google's threat list?            | `SAFE_BROWSING_API_KEY` | source skipped + note                                     |
+| abuse.ch URLhaus        | Has the URL been reported for malware/phishing? | `URLHAUS_AUTH_KEY`      | source skipped + note                                     |
 
-## Catatan privasi & kepatuhan
+## Privacy & compliance notes
 
-- URL yang dicurigai **dikirim sebagai data** ke Google/abuse.ch. Target
-  ** tidak pernah dibuka** dari server plugin (anti-SSRF). Informasi ini perlu
-  disebut di privacy policy publik.
-- Kueri RDAP mengungkap nama domain ke registri — bagaimanapun juga informasi
-  publik.
-- Hasil provider di-cache (`cache_ttl_hours`, default 24 jam) untuk menghemat
-  kuota.
-- Kuota, lisensi, dan ToS tiap penyedia **wajib diverifikasi ulang** sebelum
-  pemakaian produksi (catatan spec §7.1).
-- urlscan.io / sandbox browser ditunda (post-MVP); struktur adapter sudah
-  disiapkan di `core/checks/linkcheck.py`.
+- Suspicious URLs are **sent as data** to Google/abuse.ch. Targets are
+  **never fetched** from the plugin server (anti-SSRF). This must be mentioned
+  in the public privacy policy.
+- RDAP queries reveal the domain name to the registry — public information
+  regardless.
+- Provider results are cached (`cache_ttl_hours`, default 24 hours) to save
+  quota.
+- Quotas, licenses, and ToS of every provider **must be re-verified** before
+  production use (spec note §7.1).
+- urlscan.io / browser sandbox is deferred (post-MVP); the adapter structure is
+  already prepared in `core/checks/linkcheck.py`.
 
-## Degradasi yang dijanjikan
+## Promised degradation
 
-Untuk setiap sumber, verdict memuat entri `sources[]` dengan status:
+For each source, the verdict contains a `sources[]` entry with a status:
 
-- `ok` — selesai, hasil dipakai;
-- `partial` — sebagian item gagal;
-- `unreachable` — gagal total, dicatat sebagai catatan;
-- `skipped_no_key` — kunci belum diisi, dicatat sebagai catatan;
+- `ok` — completed, result used;
+- `partial` — some items failed;
+- `unreachable` — failed entirely, recorded as a note;
+- `skipped_no_key` — key not filled in, recorded as a note;
 - `disabled` — `network_enabled: false`.
 
-Skill menginstruksikan model untuk mengutip status ini apa adanya, tanpa
-menambah kesan "bersih".
+The skill instructs the model to quote these statuses as they are, without
+adding any impression of "clean".

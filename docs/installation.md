@@ -1,76 +1,77 @@
-# Instalasi Scampi
+# Installing Scampi
 
-## Prasyarat
+## Prerequisites
 
-- Hermes Agent yang mendukung _directory plugins_ (manifest v2).
-- Python 3.9+ (runtime Hermes juga memakai Python yang sama untuk plugin).
-- Opsional: kunci Google Safe Browsing dan URLhaus (lihat `credentials.md`).
+- Hermes Agent with directory plugin support (manifest v2).
+- Python 3.9+ (the Hermes runtime uses the same Python for plugins).
+- Optional: Google Safe Browsing and URLhaus keys (see `credentials.md`).
 
-## Langkah
+## Steps
 
-1. **Pasang plugin**
+1. **Install the plugin**
 
    ```bash
    hermes plugins install <owner>/<repo>
    ```
 
-   Dari checkout lokal, jalankan `./install.sh` (script meneruskan ke CLI
-   Hermes bila tersedia, atau menampilkan langkah manual).
+   From a local checkout, run `./install.sh` (the script delegates to the Hermes
+   CLI when available, or prints the manual steps).
 
-2. **Aktifkan** jika belum otomatis (Hermes meminta konfirmasi dependensi
-   saat instalasi — Scampi hanya butuh PyYAML):
+2. **Enable it** if that did not happen automatically (Hermes asks for
+   dependency confirmation during install — Scampi only needs PyYAML):
 
    ```bash
    hermes plugins enable scampi
    ```
 
-3. **Isi kunci opsional** (tidak wajib; verdict tetap jalan tanpa keduanya):
+3. **Fill in the optional keys** (not required; verdicts still work without
+   either key):
 
    ```bash
-   # lewat config UI Hermes, atau:
+   # via the Hermes config UI, or:
    echo "SAFE_BROWSING_API_KEY=..." >> ~/.hermes/.env
    echo "URLHAUS_AUTH_KEY=..."       >> ~/.hermes/.env
    ```
 
-   Panduan memperoleh kunci: `docs/credentials.md`.
+   How to obtain the keys: `docs/credentials.md`.
 
-4. **Verifikasi**
+4. **Verify**
 
    ```bash
-   hermes scampi status        # polanya termuat, kunci aktif/tidak, hitungan DB
+   hermes scampi status        # patterns loaded, keys active or not, DB counts
    hermes scampi patterns validate
    ```
 
-   Di chat: `/scampi status`.
+   In chat: `/scampi status`.
 
-5. **Uji cepat** — kirim pesan ke bot:
+5. **Quick test** — send a message to the bot:
 
    > Akun BCA Anda diblokir. Verifikasi segera: bca-verifikasi.xyz
 
-   Harusnya dijawab verdict "🚨 Kemungkinan besar penipuan" dengan alasan dan
-   tindakan.
+   It should answer with the verdict "🚨 Kemungkinan besar penipuan"
+   ("likely scam") plus its reasons and recommended actions.
 
-6. **(Opsional) Cron retensi** — hapus artefak lama secara berkala:
+6. **(Optional) Retention cron** — periodically delete old artifacts:
 
    ```bash
-   hermes scampi retention purge          # pakai retention_days dari settings
+   hermes scampi retention purge          # uses retention_days from settings
    hermes scampi retention purge --days 30
    ```
 
-   Jalankan lewat cron/scheduler Hermes dengan `--no-agent` (script-only).
+   Run it via cron/the Hermes scheduler with `--no-agent` (script-only).
 
 ## Upgrade & uninstall
 
-- Upgrade: `hermes plugins install <owner>/<repo> --ref <tag/sha>` lalu
+- Upgrade: `hermes plugins install <owner>/<repo> --ref <tag/sha>` then
   `hermes plugins enable scampi`.
 - Uninstall: `hermes plugins disable scampi` / `hermes plugins uninstall scampi`.
-  Data di `<HERMES_HOME>/plugin-data/scampi/` tetap ada sampai dihapus manual.
+  Data in `<HERMES_HOME>/plugin-data/scampi/` remains until deleted manually.
 
 ## Troubleshooting
 
-| Gejala                                            | Penyebab umum                 | Solusi                                                                         |
-| ------------------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------ |
-| Verdict bilang "Google Safe Browsing tidak aktif" | kunci belum diisi             | isi `SAFE_BROWSING_API_KEY` atau biarkan (degradasi wajar)                     |
-| "Batas pengecekan tercapai"                       | rate limit                    | tunggu sesuai `retry_after_seconds`, atau naikkan `rate_limit_checks_per_hour` |
-| Domain age tidak terverifikasi                    | RDAP timeout/tidak terjangkau | cek koneksi; verdict menandai sumber tak terjangkau                            |
-| Skill tidak terpanggil                            | `announce_skill` dimatikan    | set `announce_skill: true`                                                     |
+| Symptom                                                    | Common cause                  | Fix                                                                            |
+| ---------------------------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------ |
+| Verdict says "Google Safe Browsing tidak aktif"             | key not filled in             | set `SAFE_BROWSING_API_KEY`, or leave it (graceful degradation)                 |
+| "Batas pengecekan tercapai" (check limit reached)           | rate limit                    | wait `retry_after_seconds`, or raise `rate_limit_checks_per_hour`               |
+| Domain age not verified                                     | RDAP timeout/unreachable      | check connectivity; the verdict flags the unreachable source                    |
+| Skill is not triggered                                      | `announce_skill` disabled     | set `announce_skill: true`                                                      |

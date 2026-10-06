@@ -1,88 +1,92 @@
-# Runbook kurasi
+# Curation runbook
 
-Panduan untuk operator Scampi: menambah pola, memutakhirkan allowlist,
-mengubah bobot, dan mengkalibrasi ambang.
+A guide for Scampi operators: adding patterns, updating the allowlist, changing
+weights, and calibrating thresholds.
 
-## Pola penipuan (`data/patterns/*.yaml`)
+## Scam patterns (`data/patterns/*.yaml`)
 
-Setiap file satu pola. Skema:
+One pattern per file. Schema:
 
 ```yaml
-id: undangan-pernikahan-apk # unik, huruf kecil, tanda hubung
+id: undangan-pernikahan-apk # unique, lowercase, hyphens
 name: "Undangan pernikahan berisi APK"
-description: >- # bagaimana modus bekerja (2-3 baris)
+description: >- # how the modus operandi works (2-3 lines)
   ...
-red_flags: # >= 2, bahasa pengguna
+red_flags: # >= 2, user-facing language
   - "..."
 match:
-  groups: # SEMUA grup harus punya >= 1 istilah yang cocok
+  groups: # EVERY group must have >= 1 matching term
     - ["undangan", "invitation"]
     - ["apk", "aplikasi", "instal"]
   strength: strong # strong (4.0) | medium (2.0)
-impersonated_entities: [] # brand yang sering ditiru (opsional)
-correct_response: # >= 1 langkah konkret (dipakai verdict)
+impersonated_entities: [] # frequently impersonated brands (optional)
+correct_response: # >= 1 concrete step (used by the verdict)
   - "..."
-sources: # asal pola (media/aduan/laporan)
+sources: # where the pattern came from (media/complaints/reports)
   - "..."
-last_reviewed_at: "2026-10-06" # perbarui setiap review
+last_reviewed_at: "2026-10-06" # update on every review
 ```
 
-Aturan penulisan grup:
+Group authoring rules:
 
-- Istilah dicek sebagai substring pada teks ternormalisasi (huruf kecil).
-- Pilih kombinasi yang **spesifik modus**, bukan kata umum: grup2
-  `["gagal", "tertahan"]` jauh lebih baik daripada `["cek", "link"]` yang
-  menabrak pesan sah.
-- Uji tiap perubahan terhadap korpus: `hermes scampi eval run --dataset ...`.
+- Terms are checked as substrings of the normalized (lowercased) text.
+- Pick modus-**specific** combinations, not generic words: the group
+  `["gagal", "tertahan"]` is far better than `["cek", "link"]`, which collides
+  with legitimate messages.
+- Test every change against the corpus: `hermes scampi eval run --dataset ...`.
 
-Validasi:
+Validation:
 
 ```bash
 hermes scampi patterns validate
 ```
 
-Menambah/mengubah pola tidak butuh restart plugin (dimuat saat dipakai),
-tapi cache file berbasis mtime — cukup simpan file.
+Adding or changing patterns does not require a plugin restart (they are loaded
+on use), but the file cache is mtime-based — saving the file is enough.
 
-## Allowlist domain resmi (`data/allowlist.yaml`)
+## Official domain allowlist (`data/allowlist.yaml`)
 
-- Satu entri per entitas: `entity`, `category`, `aliases`, `domains`
-  (registrable domain; subdomain otomatis dianggap resmi).
-- Tambah domain **resmi** saja, jangan tambah situs partner/agen tanpa
-  verifikasi.
-- Alias yang berupa kata umum Indonesia (mis. "DANA", "Jago") harus terdaftar
-  di `WEAK_ALIASES` (`core/checks/allowlist.py`) agar hanya cocok dengan huruf besar.
-- Perbarui domain saat bank/instansi berpindah domain — ini titik paling
-  sering menua.
+- One entry per entity: `entity`, `category`, `aliases`, `domains`
+  (registrable domain; subdomains are automatically treated as official).
+- Add **official** domains only; do not add partner/agent sites without
+  verification.
+- Aliases that are common Indonesian words (e.g. "DANA", "Jago") must be listed
+  in `WEAK_ALIASES` (`core/checks/allowlist.py`) so they only match in
+  uppercase.
+- Update domains when a bank/institution migrates domains — this is the
+  fastest-ageing part.
 
-## Bobot & ambang
+## Weights & thresholds
 
-- Bobot: `data/rules.yaml` → `weights` (ubah = review, karena memengaruhi
-  semua verdict).
-- Ambang: settings `caution_threshold` / `scam_threshold`
-  (lihat `configuration.md`).
-- Kalibrasi: jalankan eval pada korpus; target awal spec §16:
-  **recall scam ≥ 85%**, **false positive pada pesan sah ≤ 5%**.
-  Jika recall kurang → tambah/kuatkan pola; jika FP naik → persempit grup
-  atau naikkan ambang.
+- Weights: `data/rules.yaml` → `weights` (change = review, because it affects
+  every verdict).
+- Thresholds: the `caution_threshold` / `scam_threshold` settings
+  (see `configuration.md`).
+- Calibration: run the eval on the corpus; the initial spec target (§16) is
+  **scam recall ≥ 85%**, **false positives on legitimate messages ≤ 5%**.
+  If recall is short → add/strengthen patterns; if FP rises → narrow the groups
+  or raise the thresholds.
 
-## Laporan komunitas (moderasi)
+## Community reports (moderation)
 
 ```bash
 hermes scampi reports list --status unverified
 hermes scampi reports show 42
-hermes scampi reports confirm 42      # bukti kuat
-hermes scampi reports reject 42       # tidak berdasar / spam
-hermes scampi reports dispute 42      # pemilik entitas menyanggah
+hermes scampi reports confirm 42      # strong evidence
+hermes scampi reports reject 42       # unfounded / spam
+hermes scampi reports dispute 42      # entity owner contests
 ```
 
-Kebijakan label: selalu "pernah dilaporkan", tak pernah "penipu"; ambang
-naik status = `report_confirm_reporters` (3) pelapor independen +
-`report_confirm_evidence` (1) bukti; laporan menua lewat `report_decay_days`.
+Label policy: always "has been reported", never "scammer"; status promotion
+threshold = `report_confirm_reporters` (3) independent reporters +
+`report_confirm_evidence` (1) evidence item; reports age out via
+`report_decay_days`.
 
-## Status seed v1
+## Seed status v1
 
-12 pola termuat (target spec: 30): undangan APK, kurir palsu, blokir bank,
-pinjol, investasi, seller marketplace, impersonasi aparat, hadiah, PLN,
-lowongan kerja, bansos, top up e-wallet. Review berkala: **bulanan**, atau
-saat muncul modus baru di media/aduan.
+12 patterns loaded (spec target: 30): APK wedding invitation, fake courier,
+bank account block, illegal online loans (pinjol), fake investment, fake
+marketplace seller, official impersonation, fake prizes, PLN bill, fake job
+offer, fake social aid (bansos), e-wallet top-up.
+Review cadence: **monthly**, or whenever a new modus shows up in the media or
+in complaints.
