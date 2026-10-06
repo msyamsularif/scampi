@@ -1,0 +1,22 @@
+id: tagihan-pln-palsu
+name: "Tagihan listrik/PLN palsu"
+description: >-
+  Pesan mengabarkan tagihan listrik menunggak atau akan diputus, lalu mengarahkan
+  pembayaran ke link yang bukan kanal resmi PLN.
+red_flags:
+  - "Ancaman pemutusan listrik dengan tautan pembayaran"
+  - "Link bukan domain resmi PLN/PLN Mobile"
+  - "Diminta membayar lewat rekening pribadi"
+match:
+  groups:
+    - ["pln", "listrik", "token listrik"]
+    - ["menunggak", "pemutusan", "diputus", "denda", "terlambat", "link pembayaran"]
+  strength: strong
+impersonated_entities: ["PLN"]
+correct_response:
+  - "Bayar tagihan HANYA lewat PLN Mobile, situs resmi PLN, atau kanal bank/e-wallet resmi."
+  - "Jangan klik link pembayaran dari pesan tak dikenal."
+  - "Cek tagihan langsung di aplikasi PLN Mobile milikmu."
+sources:
+  - "Pola umum dilaporkan media nasional dan aduan publik; kurasi awal (seed)."
+last_reviewed_at: "2026-10-06"

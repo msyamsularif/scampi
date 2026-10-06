@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: Tests (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Install dev dependencies
+        run: python -m pip install --upgrade pip pytest pyyaml ruff
+
+      - name: Lint
+        run: ruff check .
+
+      - name: Tests
+        run: python -m pytest -q
+
+      - name: Corpus acceptance (recall / false positives)
+        run: |
+          python -m pytest -q tests/test_eval_corpus.py
+
+  hermes-validate:
+    name: Hermes plugin validation (best effort)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate with Hermes CLI if available
+        run: |
+          if command -v hermes >/dev/null 2>&1; then
+            hermes plugins validate . && hermes plugins doctor . --ci
+          else
+            echo "hermes CLI not available on this runner; skipping."
+            echo "Run manually: hermes plugins validate ."
+          fi

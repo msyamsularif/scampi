@@ -1,0 +1,22 @@
+id: lowongan-kerja-palsu
+name: "Lowongan kerja dengan biaya administrasi"
+description: >-
+  Tawaran kerja (sering 'admin online', gaji besar, tanpa interview) yang justru
+  meminta pembayaran biaya administrasi/registrasi di awal.
+red_flags:
+  - "Gaji tidak wajar untuk pekerjaan ringan"
+  - "Diminta membayar biaya administrasi/pendaftaran di awal"
+  - "Recruitment lewat WA pribadi tanpa proses resmi"
+match:
+  groups:
+    - ["loker", "lowongan", "kerja", "karyawan", "admin online", "staff"]
+    - ["biaya administrasi", "biaya pendaftaran", "bayar biaya", "setoran", "registrasi", "tanpa interview", "langsung kerja"]
+  strength: strong
+impersonated_entities: []
+correct_response:
+  - "Perusahaan resmi tidak memungut biaya apa pun dalam rekrutmen."
+  - "Jangan transfer biaya administrasi/registrasi."
+  - "Cek lowongan di kanal resmi perusahaan, bukan tautan dari WA."
+sources:
+  - "Pola umum dilaporkan media nasional dan aduan publik; kurasi awal (seed)."
+last_reviewed_at: "2026-10-06"

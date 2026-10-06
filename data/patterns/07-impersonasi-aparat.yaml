@@ -1,0 +1,23 @@
+id: impersonasi-aparat
+name: "Impersonasi aparat/regulator (OJK, Polri, Komdigi)"
+description: >-
+  Pesan mengaku dari OJK, kepolisian, atau instansi lain: menyebut pelanggaran,
+  denda, atau perkara hukum, lalu meminta pembayaran/klarifikasi lewat kanal
+  pribadi.
+red_flags:
+  - "Mengaku aparat/regulator dan menyebut perkara atau denda lewat pesan pribadi"
+  - "Diminta menghubungi nomor WA pribadi atau membuka link"
+  - "Nada mengancam dengan tenggat waktu"
+match:
+  groups:
+    - ["ojk", "polri", "polda", "polres", "kepolisian", "bssn", "komdigi", "kominfo", "bank indonesia"]
+    - ["tersangka", "kasus", "melanggar", "denda", "tindak pidana", "penahanan", "panggilan", "laporan polisi"]
+  strength: strong
+impersonated_entities: ["OJK", "Polri", "Komdigi", "Bank Indonesia"]
+correct_response:
+  - "Instansi resmi tidak menagih denda atau memanggil lewat WA pribadi."
+  - "Verifikasi lewat situs/call center resmi instansi yang bersangkutan."
+  - "Jangan transfer uang atau mengirim dokumen apa pun."
+sources:
+  - "Pola umum dilaporkan media nasional dan aduan publik; kurasi awal (seed)."
+last_reviewed_at: "2026-10-06"

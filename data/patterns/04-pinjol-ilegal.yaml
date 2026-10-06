@@ -1,0 +1,22 @@
+id: pinjol-ilegal
+name: "Tawaran pinjaman ilegal (pinjol)"
+description: >-
+  Tawaran pinjaman cepat cair tanpa jaminan dari kanal tidak resmi, sering
+  dilanjutkan dengan ancaman ke kontak saat penagihan.
+red_flags:
+  - "Tawaran pinjaman tanpa jaminan dari WA/Telegram pribadi"
+  - "Minta data pribadi lengkap dan akses kontak"
+  - "Tidak ada nama lembaga berizin OJK"
+match:
+  groups:
+    - ["pinjaman", "pinjam", "pinjol", "dana tunai", "kredit cepat", "modal usaha"]
+    - ["tanpa jaminan", "cepat cair", "cair dalam", "bunga rendah", "langsung cair", "tanpa syarat", "limit besar"]
+  strength: strong
+impersonated_entities: []
+correct_response:
+  - "Cek izin penyelenggara di situs OJK sebelum meminjam di mana pun."
+  - "Jangan kirim foto KTP, selfie, dan akses kontak ke pinjaman yang belum jelas izinnya."
+  - "Pinjol ilegal sering meneror kontak — blokir dan laporkan."
+sources:
+  - "Pola umum dilaporkan media nasional dan aduan publik; kurasi awal (seed)."
+last_reviewed_at: "2026-10-06"

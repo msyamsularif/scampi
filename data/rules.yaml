@@ -1,0 +1,128 @@
+# Scampi — scoring inputs. Curated data only; no code here.
+#
+# weights   : how much each signal contributes to the 0..N score
+# thresholds: caution/scam bands (plugin settings override these)
+# The verdict itself is computed in scoring.py; editing this file never
+# requires a code change.
+
+weights:
+  blocklist_hit: 8.0          # listed in a trusted threat source
+  apk_link: 7.0               # link serves an APK
+  account_confirmed: 7.0      # >=3 independent reporters + evidence
+  brand_mismatch: 5.0         # claims a brand, domain is not official
+  typosquat: 5.0              # domain resembles an official one
+  young_domain: 5.0           # domain younger than young_domain_days
+  otp_pin_request: 5.0        # asks for OTP/PIN/card data
+  pattern_match_strong: 4.0   # strong match with a curated pattern
+  account_reported: 3.0       # reported, not yet community-confirmed
+  pattern_match_medium: 2.0
+  pressure_language: 2.0      # urgency/threat wording, 2+ markers
+  risky_tld: 1.5
+  url_shortener: 1.5
+
+thresholds:
+  caution: 3.0
+  scam: 6.0
+
+risky_tlds:
+  - xyz
+  - top
+  - icu
+  - click
+  - site
+  - online
+  - live
+  - link
+  - sbs
+  - rest
+  - monster
+  - store
+  - buzz
+  - club
+  - vip
+  - work
+  - lol
+  - best
+  - cyou
+  - quest
+  - bar
+  - cfd
+  - boats
+
+shorteners:
+  - bit.ly
+  - tinyurl.com
+  - t.co
+  - goo.gl
+  - is.gd
+  - cutt.ly
+  - rebrand.ly
+  - shorturl.at
+  - rb.gy
+  - surl.li
+  - lnkd.in
+
+# Two or more distinct markers are required before the signal fires.
+pressure_markers:
+  - segera
+  - sekarang juga
+  - hari ini juga
+  - batas waktu
+  - terakhir
+  - hangus
+  - diblokir
+  - dibekukan
+  - terblokir
+  - ditangguhkan
+  - menunggak
+  - denda
+  - pemutusan
+  - suspend
+  - diblok
+  - melanggar
+  - tersangka
+  - kasus hukum
+  - jangan beritahu
+  - rahasiakan
+  - urgent
+  - mendesak
+  - 24 jam
+  - sebelum jam
+  - konsekuensi
+  - tindakan hukum
+  - kartu anda akan
+
+otp_keywords:
+  - otp
+  - kode otp
+  - kode verifikasi
+  - kode rahasia
+  - kode sms
+  - token
+  - cvv
+  - cvc
+  - pin
+
+request_verbs:
+  - kirim
+  - kirimkan
+  - berikan
+  - masukkan
+  - isi
+  - balas
+  - sebutkan
+  - tulis
+  - share
+  - serahkan
+  - baca kode
+
+# Verbs inside a warning ("jangan bagikan") do not count as a request.
+negations:
+  - jangan
+  - jgn
+  - tidak
+  - tdk
+  - never
+  - do not
+  - don't
+  - hindari

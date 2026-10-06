@@ -1,0 +1,22 @@
+id: ewallet-topup-palsu
+name: "Top up e-wallet/pulsa 'murah' di luar aplikasi resmi"
+description: >-
+  Penawaran top up, pulsa, atau voucher dengan potongan besar dari kanal tidak
+  resmi. Saldo tidak masuk, atau akun diminta login di situs tiruan.
+red_flags:
+  - "Potongan harga tidak wajar (di atas promo resmi)"
+  - "Transaksi lewat link/website, bukan aplikasi resmi"
+  - "Diminta login akun e-wallet di situs tautan"
+match:
+  groups:
+    - ["top up", "topup", "top-up", "saldo", "pulsa", "voucher"]
+    - ["murah", "diskon", "potongan", "50%", "promo", "lebih murah", "murah meriah"]
+  strength: strong
+impersonated_entities: ["DANA", "OVO", "GoPay", "ShopeePay", "LinkAja"]
+correct_response:
+  - "Top up HANYA di aplikasi resmi atau kanal yang terdaftar."
+  - "Jangan login akun e-wallet di situs dari tautan siapa pun."
+  - "Simpan bukti percakapan dan laporkan bila sudah transfer."
+sources:
+  - "Pola umum dilaporkan media nasional dan aduan publik; kurasi awal (seed)."
+last_reviewed_at: "2026-10-06"

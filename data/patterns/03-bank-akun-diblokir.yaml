@@ -1,0 +1,23 @@
+id: bank-akun-diblokir
+name: "Akun bank diblokir + link verifikasi"
+description: >-
+  Pesan mengaku dari bank: akun/kartu diblokir, dibekukan, atau ditangguhkan,
+  lalu mendesak verifikasi lewat link. Phishing klasik untuk mencuri kredensial
+  dan OTP.
+red_flags:
+  - "Ancaman akun diblokir/dibekukan tanpa diperiksa dulu lewat aplikasi resmi"
+  - "Ada link yang bukan domain resmi bank"
+  - "Nada mendesak dan meminta data/kode"
+match:
+  groups:
+    - ["akun", "kartu", "rekening", "m-banking", "mbanking", "mobile banking", "internet banking"]
+    - ["diblokir", "terblokir", "dibekukan", "ditangguhkan", "dikunci", "suspend", "hangus", "bermasalah", "mencurigakan"]
+  strength: strong
+impersonated_entities: ["BCA", "Mandiri", "BRI", "BNI", "BSI", "CIMB Niaga", "Permata Bank", "BTN"]
+correct_response:
+  - "Jangan klik link. Buka aplikasi resmi bank atau ketik sendiri alamat situsnya."
+  - "Hubungi call center resmi yang tertera di kartu/aplikasi bank."
+  - "Jangan pernah memberikan OTP, PIN, atau nomor kartu kepada siapa pun."
+sources:
+  - "Pola umum dilaporkan media nasional dan aduan publik; kurasi awal (seed)."
+last_reviewed_at: "2026-10-06"

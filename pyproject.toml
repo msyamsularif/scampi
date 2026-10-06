@@ -1,0 +1,40 @@
+[project]
+name = "scampi-hermes-plugin"
+version = "0.1.0"
+description = "Hermes Agent plugin: scam detector for Indonesia (messages, links, accounts, screenshots)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+
+# The only runtime dependency is a YAML parser for the curated data files
+# (scam patterns, allowlist, scoring rules). Everything else is stdlib:
+# urllib for provider calls, sqlite3 for storage, hmac/hashlib for reporter
+# hashing, re for extraction. Hermes reads this list when the plugin is
+# installed.
+dependencies = [
+    "PyYAML>=6.0,<7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# The plugin's __init__.py sits at the repository root — that is what makes the
+# repo installable with `hermes plugins install owner/repo` — and the root
+# directory is a Python package named "scampi". Keeping the conftest cutoff
+# inside tests/ stops pytest's collector chain at the test directory.
+addopts = "-q --confcutdir=tests"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "C4"]
+ignore = [
+    "E501",  # long lines in prompts/descriptions are fine
+]

@@ -1,0 +1,22 @@
+id: hadiah-undian-palsu
+name: "Hadiah/undian yang tidak pernah diikuti"
+description: >-
+  Pesan mengabarkan menang undian atau terpilih sebagai penerima hadiah, lalu
+  meminta klaim lewat link atau membayar biaya administrasi.
+red_flags:
+  - "Menang undian padahal tidak pernah ikut"
+  - "Klaim hadiah lewat link pendek/domain aneh"
+  - "Diminta membayar biaya administrasi atau pajak di depan"
+match:
+  groups:
+    - ["selamat", "undian", "beruntung", "menang"]
+    - ["hadiah", "uang tunai", "juta", "klaim", "ambil hadiah", "transfer hadiah"]
+  strength: strong
+impersonated_entities: []
+correct_response:
+  - "Hadiah resmi tidak pernah meminta biaya di depan atau data rekening lewat link."
+  - "Jangan klik link klaim; jangan isi data apa pun."
+  - "Verifikasi langsung ke penyelenggara resmi bila ragu."
+sources:
+  - "Pola umum dilaporkan media nasional dan aduan publik; kurasi awal (seed)."
+last_reviewed_at: "2026-10-06"

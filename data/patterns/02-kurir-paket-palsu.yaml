@@ -1,0 +1,23 @@
+id: kurir-paket-palsu
+name: "Pemberitahuan kurir palsu (paket gagal/tertahan)"
+description: >-
+  Pesan mengaku dari jasa kirim tentang paket yang gagal dikirim atau tertahan,
+  lalu meminta konfirmasi alamat / unduh aplikasi lewat link yang bukan domain
+  resmi kurir.
+red_flags:
+  - "Paket 'gagal dikirim' padahal tidak merasa menunggu paket itu"
+  - "Diminta klik link atau unduh aplikasi dari domain yang bukan milik kurir resmi"
+  - "Nomor pengirim bukan kanal resmi kurir"
+match:
+  groups:
+    - ["kurir", "paket", "j&t", "jne", "sicepat", "anteraja", "ninja xpress", "resi"]
+    - ["gagal", "tertahan", "dikembalikan", "dikirim ulang", "antar ulang", "tidak terkirim", "bermasalah", "unduh aplikasi", "instal aplikasi", "file apk"]
+  strength: strong
+impersonated_entities: ["JNE", "J&T Express", "SiCepat", "AnterAja", "Ninja Xpress"]
+correct_response:
+  - "Lacak paket HANYA lewat aplikasi/situs resmi kurir yang kamu kenal."
+  - "Jangan klik link, jangan instal aplikasi, jangan isi data apa pun."
+  - "Kalau ragu, hubungi call center resmi kurir dari aplikasi resminya."
+sources:
+  - "Pola umum dilaporkan media nasional dan aduan publik; kurasi awal (seed)."
+last_reviewed_at: "2026-10-06"

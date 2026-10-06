@@ -1,0 +1,161 @@
+# Hermes plugin manifest (v2) — Scampi
+#
+# Everything that must never depend on the model getting it right lives in the
+# Python code beside this file. The manifest only declares what the plugin
+# provides, which credentials it can use, and which user-visible settings it
+# reads.
+
+manifest_version: 2
+api_version: 1
+
+name: scampi
+version: 0.1.0
+
+description: >-
+  Scam detector for Indonesia. Users forward suspicious messages, links,
+  screenshots, phone numbers, or bank accounts, and Scampi answers with a risk
+  verdict built from technical evidence (blocklists, RDAP domain age,
+  typosquatting, an official-domain allowlist), a curated scam-pattern
+  database, and community reports — never from the model's guesswork. The
+  model extracts and explains; the rules decide.
+
+author: Scampi
+license: MIT
+homepage: https://github.com/msyamsularif/scampi-hermes-plugin
+tags:
+  - scam
+  - fraud
+  - indonesia
+  - telegram
+  - security
+
+# --------------------------------------------------------------------------- #
+# Credentials (optional). The plugin loads and answers without both keys:
+# link checks degrade to RDAP + local heuristics and the verdict states which
+# sources were skipped. Values are stored by Hermes (~/.hermes/.env or a
+# configured secret manager) and reach the plugin only as environment
+# variables.
+# --------------------------------------------------------------------------- #
+optional_env:
+  - name: SAFE_BROWSING_API_KEY
+    description: >-
+      Google Safe Browsing API key (free tier). Enables blocklist lookups
+      against Google's threat lists. Without it, link checks skip the
+      blocklist source and the verdict says so.
+    prompt: "Google Safe Browsing API key (optional)"
+    url: "https://developers.google.com/safe-browsing/v4/get-started"
+    secret: true
+    password: true
+    category: tool
+
+  - name: URLHAUS_AUTH_KEY
+    description: >-
+      abuse.ch URLhaus Auth-Key (free). Enables malware/phishing URL lookups.
+      Without it, URLhaus checks are skipped and the verdict says so.
+    prompt: "URLhaus Auth-Key (optional)"
+    url: "https://auth.abuse.ch/"
+    secret: true
+    password: true
+    category: tool
+
+provides_tools:
+  - scampi_check
+  - scampi_report
+  - scampi_feedback
+
+provides_hooks:
+  - pre_llm_call
+  - post_tool_call
+
+config_schema:
+  announce_skill:
+    type: bool
+    default: true
+    label: "Announce bundled skill"
+    description: >-
+      Inject a pointer to the bundled skill when a turn looks like a scam
+      check. Plugin skills are namespaced and stay out of the skill index, so
+      this is what makes the bundle self-sufficient.
+
+  redact_before_llm:
+    type: bool
+    default: true
+    label: "Redact secrets before the LLM"
+    description: >-
+      Strip OTPs, PINs, NIKs, and card numbers from outgoing model payloads.
+      Turn off only for debugging.
+
+  network_enabled:
+    type: bool
+    default: true
+    label: "Network checks"
+    description: >-
+      Allow link checks to call RDAP and the configured blocklist providers.
+      Off = fully offline verdicts (patterns, allowlist, report database only).
+
+  caution_threshold:
+    type: float
+    default: 3.0
+    label: "Caution threshold"
+    description: "Score at or above which a result is flagged 'Perlu hati-hati'."
+
+  scam_threshold:
+    type: float
+    default: 6.0
+    label: "Scam threshold"
+    description: "Score at or above which a result is flagged 'Kemungkinan besar penipuan'."
+
+  young_domain_days:
+    type: int
+    default: 30
+    label: "Young-domain age (days)"
+    description: "Domains younger than this count as a high-risk signal."
+
+  report_confirm_reporters:
+    type: int
+    default: 3
+    label: "Reporters needed to confirm"
+    description: "Distinct reporters required before an entity is shown as community-confirmed."
+
+  report_confirm_evidence:
+    type: int
+    default: 1
+    label: "Evidence needed to confirm"
+    description: "Minimum evidence items attached across reports for the confirmed status."
+
+  report_decay_days:
+    type: int
+    default: 180
+    label: "Report decay (days)"
+    description: "Reports older than this stop counting toward status and weight."
+
+  retention_days:
+    type: int
+    default: 90
+    label: "Evidence retention (days)"
+    description: "Reports' evidence references and check metadata older than this are purged."
+
+  rate_limit_checks_per_hour:
+    type: int
+    default: 20
+    label: "Checks per user per hour"
+
+  rate_limit_reports_per_day:
+    type: int
+    default: 10
+    label: "Reports per user per day"
+
+  cache_ttl_hours:
+    type: int
+    default: 24
+    label: "Provider cache TTL (hours)"
+
+  network_timeout_seconds:
+    type: float
+    default: 4.0
+    label: "Per-source network timeout (seconds)"
+
+  max_domains_per_check:
+    type: int
+    default: 3
+    label: "Max domains checked per request"

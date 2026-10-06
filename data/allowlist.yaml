@@ -1,0 +1,233 @@
+# Scampi — curated official-domain allowlist.
+#
+# One entry per entity: banks, e-wallets, couriers, marketplaces, government,
+# utilities, messaging. `domains` are registrable domains (a subdomain of a
+# listed domain also counts as official). Review dates belong in the entry
+# when it changes; see docs/curation-runbook.md.
+#
+# A brand mentioned in a message whose link is NOT one of these domains is a
+# strong signal. A few aliases are ordinary Indonesian words — those are
+# matched case-sensitively (see allowlist.WEAK_ALIASES).
+
+entries:
+  # ----- banks -------------------------------------------------------------
+  - entity: BCA
+    category: bank
+    aliases: ["BCA", "Bank BCA"]
+    domains: ["bca.co.id", "klikbca.com"]
+  - entity: Mandiri
+    category: bank
+    aliases: ["Mandiri", "Bank Mandiri"]
+    domains: ["bankmandiri.co.id"]
+  - entity: BRI
+    category: bank
+    aliases: ["BRI", "Bank BRI"]
+    domains: ["bri.co.id"]
+  - entity: BNI
+    category: bank
+    aliases: ["BNI", "Bank BNI"]
+    domains: ["bni.co.id"]
+  - entity: BSI
+    category: bank
+    aliases: ["BSI", "Bank Syariah Indonesia"]
+    domains: ["bankbsi.co.id"]
+  - entity: CIMB Niaga
+    category: bank
+    aliases: ["CIMB", "CIMB Niaga"]
+    domains: ["cimbniaga.co.id"]
+  - entity: Permata Bank
+    category: bank
+    aliases: ["Permata", "PermataBank"]
+    domains: ["permatabank.com"]
+  - entity: BTN
+    category: bank
+    aliases: ["BTN", "Bank BTN"]
+    domains: ["btn.co.id"]
+  - entity: Danamon
+    category: bank
+    aliases: ["Danamon"]
+    domains: ["danamon.co.id"]
+  - entity: OCBC
+    category: bank
+    aliases: ["OCBC", "OCBC NISP"]
+    domains: ["ocbc.id"]
+  - entity: Panin Bank
+    category: bank
+    aliases: ["Panin", "Panin Bank"]
+    domains: ["panin.co.id"]
+  - entity: Maybank
+    category: bank
+    aliases: ["Maybank"]
+    domains: ["maybank.co.id"]
+  - entity: Bank Jago
+    category: bank
+    aliases: ["Bank Jago", "Jago"]
+    domains: ["jago.com"]
+  - entity: SeaBank
+    category: bank
+    aliases: ["SeaBank"]
+    domains: ["seabank.co.id"]
+  - entity: Bank Mega
+    category: bank
+    aliases: ["Bank Mega"]
+    domains: ["bankmega.com"]
+
+  # ----- e-wallets ----------------------------------------------------------
+  - entity: OVO
+    category: ewallet
+    aliases: ["OVO"]
+    domains: ["ovo.id"]
+  - entity: GoPay
+    category: ewallet
+    aliases: ["GoPay", "Gojek"]
+    domains: ["gopay.co.id", "gojek.com"]
+  - entity: DANA
+    category: ewallet
+    aliases: ["DANA"]
+    domains: ["dana.id"]
+  - entity: ShopeePay
+    category: ewallet
+    aliases: ["ShopeePay"]
+    domains: ["shopeepay.co.id"]
+  - entity: LinkAja
+    category: ewallet
+    aliases: ["LinkAja"]
+    domains: ["linkaja.id"]
+
+  # ----- couriers ------------------------------------------------------------
+  - entity: JNE
+    category: courier
+    aliases: ["JNE"]
+    domains: ["jne.co.id"]
+  - entity: J&T Express
+    category: courier
+    aliases: ["J&T", "J&T Express", "JNT"]
+    domains: ["jet.co.id", "jnt.co.id"]
+  - entity: SiCepat
+    category: courier
+    aliases: ["SiCepat"]
+    domains: ["sicepat.com"]
+  - entity: AnterAja
+    category: courier
+    aliases: ["AnterAja", "Anteraja"]
+    domains: ["anteraja.id"]
+  - entity: POS Indonesia
+    category: courier
+    aliases: ["POS Indonesia"]
+    domains: ["posindonesia.co.id"]
+  - entity: Ninja Xpress
+    category: courier
+    aliases: ["Ninja Xpress"]
+    domains: ["ninjaxpress.co.id"]
+  - entity: Lion Parcel
+    category: courier
+    aliases: ["Lion Parcel"]
+    domains: ["lionparcel.com"]
+  - entity: ID Express
+    category: courier
+    aliases: ["ID Express"]
+    domains: ["idexpress.com"]
+
+  # ----- marketplaces --------------------------------------------------------
+  - entity: Tokopedia
+    category: marketplace
+    aliases: ["Tokopedia"]
+    domains: ["tokopedia.com"]
+  - entity: Shopee
+    category: marketplace
+    aliases: ["Shopee"]
+    domains: ["shopee.co.id"]
+  - entity: Lazada
+    category: marketplace
+    aliases: ["Lazada"]
+    domains: ["lazada.co.id"]
+  - entity: Blibli
+    category: marketplace
+    aliases: ["Blibli"]
+    domains: ["blibli.com"]
+  - entity: Bukalapak
+    category: marketplace
+    aliases: ["Bukalapak"]
+    domains: ["bukalapak.com"]
+  - entity: TikTok Shop
+    category: marketplace
+    aliases: ["TikTok Shop", "TikTok"]
+    domains: ["tiktok.com"]
+  - entity: Zalora
+    category: marketplace
+    aliases: ["Zalora"]
+    domains: ["zalora.co.id"]
+
+  # ----- government ----------------------------------------------------------
+  - entity: OJK
+    category: government
+    aliases: ["OJK", "Otoritas Jasa Keuangan"]
+    domains: ["ojk.go.id"]
+  - entity: Bank Indonesia
+    category: government
+    aliases: ["Bank Indonesia"]
+    domains: ["bi.go.id"]
+  - entity: Komdigi
+    category: government
+    aliases: ["Komdigi", "Kominfo"]
+    domains: ["komdigi.go.id", "kominfo.go.id"]
+  - entity: Kementerian Keuangan
+    category: government
+    aliases: ["Kemenkeu", "Kementerian Keuangan"]
+    domains: ["kemenkeu.go.id"]
+  - entity: DJP
+    category: government
+    aliases: ["DJP", "Direktorat Jenderal Pajak"]
+    domains: ["pajak.go.id"]
+  - entity: Polri
+    category: government
+    aliases: ["Polri", "Kepolisian"]
+    domains: ["polri.go.id"]
+  - entity: BSSN
+    category: government
+    aliases: ["BSSN"]
+    domains: ["bssn.go.id"]
+  - entity: LPS
+    category: government
+    aliases: ["LPS", "Lembaga Penjamin Simpanan"]
+    domains: ["lps.go.id"]
+  - entity: BPJS Kesehatan
+    category: government
+    aliases: ["BPJS Kesehatan", "BPJS"]
+    domains: ["bpjs-kesehatan.go.id"]
+  - entity: BPJS Ketenagakerjaan
+    category: government
+    aliases: ["BPJS Ketenagakerjaan", "BPJAMSOSTEK"]
+    domains: ["bpjsketenagakerjaan.go.id"]
+
+  # ----- utilities & telco ----------------------------------------------------
+  - entity: PLN
+    category: utility
+    aliases: ["PLN", "PLN Mobile"]
+    domains: ["pln.co.id", "iconpln.co.id"]
+  - entity: Telkomsel
+    category: telco
+    aliases: ["Telkomsel"]
+    domains: ["telkomsel.com"]
+  - entity: Indosat
+    category: telco
+    aliases: ["Indosat", "Indosat Ooredoo"]
+    domains: ["indosat.com", "ioh.co.id"]
+  - entity: XL Axiata
+    category: telco
+    aliases: ["XL", "XL Axiata"]
+    domains: ["xl.co.id"]
+  - entity: Tri
+    category: telco
+    aliases: ["Tri"]
+    domains: ["tri.co.id"]
+
+  # ----- messaging -------------------------------------------------------------
+  - entity: WhatsApp
+    category: messaging
+    aliases: ["WhatsApp"]
+    domains: ["whatsapp.com", "wa.me"]
+  - entity: Telegram
+    category: messaging
+    aliases: ["Telegram"]
+    domains: ["telegram.org", "t.me"]
