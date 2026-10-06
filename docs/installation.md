@@ -2,7 +2,7 @@
 
 ## Prasyarat
 
-- Hermes Agent yang mendukung *directory plugins* (manifest v2).
+- Hermes Agent yang mendukung _directory plugins_ (manifest v2).
 - Python 3.9+ (runtime Hermes juga memakai Python yang sama untuk plugin).
 - Opsional: kunci Google Safe Browsing dan URLhaus (lihat `credentials.md`).
 
@@ -68,9 +68,9 @@
 
 ## Troubleshooting
 
-| Gejala | Penyebab umum | Solusi |
-|---|---|---|
-| Verdict bilang "Google Safe Browsing tidak aktif" | kunci belum diisi | isi `SAFE_BROWSING_API_KEY` atau biarkan (degradasi wajar) |
-| "Batas pengecekan tercapai" | rate limit | tunggu sesuai `retry_after_seconds`, atau naikkan `rate_limit_checks_per_hour` |
-| Domain age tidak terverifikasi | RDAP timeout/tidak terjangkau | cek koneksi; verdict menandai sumber tak terjangkau |
-| Skill tidak terpanggil | `announce_skill` dimatikan | set `announce_skill: true` |
+| Gejala                                            | Penyebab umum                 | Solusi                                                                         |
+| ------------------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------ |
+| Verdict bilang "Google Safe Browsing tidak aktif" | kunci belum diisi             | isi `SAFE_BROWSING_API_KEY` atau biarkan (degradasi wajar)                     |
+| "Batas pengecekan tercapai"                       | rate limit                    | tunggu sesuai `retry_after_seconds`, atau naikkan `rate_limit_checks_per_hour` |
+| Domain age tidak terverifikasi                    | RDAP timeout/tidak terjangkau | cek koneksi; verdict menandai sumber tak terjangkau                            |
+| Skill tidak terpanggil                            | `announce_skill` dimatikan    | set `announce_skill: true`                                                     |

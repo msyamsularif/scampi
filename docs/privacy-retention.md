@@ -2,14 +2,14 @@
 
 ## Yang disimpan
 
-| Data | Disimpan di | Isi |
-|---|---|---|
-| Riwayat cek | tabel `checks` | **hash** input + verdict + skor + waktu (tanpa isi pesan) |
-| Laporan | tabel `reports` | entitas ternormalisasi, bank, hash pelapor (HMAC), pattern, catatan |
-| Bukti | tabel `report_evidence` | **referensi** (nama file/link) — isi file tidak dibaca |
-| Feedback | tabel `feedback` | check_id, verdict, akurasi, catatan teredaksi |
-| Cache provider | `link_cache` | hasil RDAP/Safe Browsing/URLhaus (TTL 24 jam) |
-| Rate limit | `rate_limits` | key identitas, bucket, jendela, hitungan |
+| Data           | Disimpan di             | Isi                                                                 |
+| -------------- | ----------------------- | ------------------------------------------------------------------- |
+| Riwayat cek    | tabel `checks`          | **hash** input + verdict + skor + waktu (tanpa isi pesan)           |
+| Laporan        | tabel `reports`         | entitas ternormalisasi, bank, hash pelapor (HMAC), pattern, catatan |
+| Bukti          | tabel `report_evidence` | **referensi** (nama file/link) — isi file tidak dibaca              |
+| Feedback       | tabel `feedback`        | check_id, verdict, akurasi, catatan teredaksi                       |
+| Cache provider | `link_cache`            | hasil RDAP/Safe Browsing/URLhaus (TTL 24 jam)                       |
+| Rate limit     | `rate_limits`           | key identitas, bucket, jendela, hitungan                            |
 
 Isi pesan mentah **tidak pernah** disimpan; pencocokan laporan memakai nilai
 ternormalisasi (digit rekening / domain registrable).
@@ -31,7 +31,7 @@ diperiksa. Masking tampilan (`****7890`) dipakai di semua keluaran.
 - Pelapor disimpan sebagai **HMAC-SHA256** dari kunci acak per-profil; kunci
   di plugin state. Identitas asli tidak pernah masuk basis data.
 - Rate limit memakai identitas milik host (user/session) — lihat
-  `identity.py`; fallback per-sesi bila host tidak mengekspos user id.
+  `core/store/identity.py`; fallback per-sesi bila host tidak mengekspos user id.
 - Catatan: riwayat percakapan Hermes sendiri diatur oleh konfigurasi host —
   plugin tidak mengubah retensi sesi host.
 

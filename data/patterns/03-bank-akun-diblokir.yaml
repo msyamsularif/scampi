@@ -10,10 +10,29 @@ red_flags:
   - "Nada mendesak dan meminta data/kode"
 match:
   groups:
-    - ["akun", "kartu", "rekening", "m-banking", "mbanking", "mobile banking", "internet banking"]
-    - ["diblokir", "terblokir", "dibekukan", "ditangguhkan", "dikunci", "suspend", "hangus", "bermasalah", "mencurigakan"]
+    - [
+        "akun",
+        "kartu",
+        "rekening",
+        "m-banking",
+        "mbanking",
+        "mobile banking",
+        "internet banking",
+      ]
+    - [
+        "diblokir",
+        "terblokir",
+        "dibekukan",
+        "ditangguhkan",
+        "dikunci",
+        "suspend",
+        "hangus",
+        "bermasalah",
+        "mencurigakan",
+      ]
   strength: strong
-impersonated_entities: ["BCA", "Mandiri", "BRI", "BNI", "BSI", "CIMB Niaga", "Permata Bank", "BTN"]
+impersonated_entities:
+  ["BCA", "Mandiri", "BRI", "BNI", "BSI", "CIMB Niaga", "Permata Bank", "BTN"]
 correct_response:
   - "Jangan klik link. Buka aplikasi resmi bank atau ketik sendiri alamat situsnya."
   - "Hubungi call center resmi yang tertera di kartu/aplikasi bank."

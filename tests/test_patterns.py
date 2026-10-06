@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from scampi import patterns
+from scampi.core.checks import patterns
 
 
 def test_all_shipped_patterns_valid():

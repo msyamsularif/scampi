@@ -8,23 +8,23 @@ mengubah bobot, dan mengkalibrasi ambang.
 Setiap file satu pola. Skema:
 
 ```yaml
-id: undangan-pernikahan-apk          # unik, huruf kecil, tanda hubung
+id: undangan-pernikahan-apk # unik, huruf kecil, tanda hubung
 name: "Undangan pernikahan berisi APK"
-description: >-                       # bagaimana modus bekerja (2-3 baris)
+description: >- # bagaimana modus bekerja (2-3 baris)
   ...
-red_flags:                            # >= 2, bahasa pengguna
+red_flags: # >= 2, bahasa pengguna
   - "..."
 match:
-  groups:                             # SEMUA grup harus punya >= 1 istilah yang cocok
+  groups: # SEMUA grup harus punya >= 1 istilah yang cocok
     - ["undangan", "invitation"]
     - ["apk", "aplikasi", "instal"]
-  strength: strong                    # strong (4.0) | medium (2.0)
-impersonated_entities: []             # brand yang sering ditiru (opsional)
-correct_response:                     # >= 1 langkah konkret (dipakai verdict)
+  strength: strong # strong (4.0) | medium (2.0)
+impersonated_entities: [] # brand yang sering ditiru (opsional)
+correct_response: # >= 1 langkah konkret (dipakai verdict)
   - "..."
-sources:                              # asal pola (media/aduan/laporan)
+sources: # asal pola (media/aduan/laporan)
   - "..."
-last_reviewed_at: "2026-10-06"        # perbarui setiap review
+last_reviewed_at: "2026-10-06" # perbarui setiap review
 ```
 
 Aturan penulisan grup:
@@ -51,7 +51,7 @@ tapi cache file berbasis mtime — cukup simpan file.
 - Tambah domain **resmi** saja, jangan tambah situs partner/agen tanpa
   verifikasi.
 - Alias yang berupa kata umum Indonesia (mis. "DANA", "Jago") harus terdaftar
-  di `WEAK_ALIASES` (`allowlist.py`) agar hanya cocok dengan huruf besar.
+  di `WEAK_ALIASES` (`core/checks/allowlist.py`) agar hanya cocok dengan huruf besar.
 - Perbarui domain saat bank/instansi berpindah domain — ini titik paling
   sering menua.
 

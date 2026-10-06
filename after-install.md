@@ -12,10 +12,10 @@ in order and keep each step short for the user.
    to enable the blocklist providers:
    - `SAFE_BROWSING_API_KEY` — Google Safe Browsing (free tier).
    - `URLHAUS_AUTH_KEY` — abuse.ch URLhaus (free account).
-   Explain that without keys, link checks still run (RDAP domain age + local
-   heuristics) and every verdict states which sources were skipped. Point to
-   `docs/credentials.md` for the exact steps. Never paste keys into chat —
-   have the user store them in Hermes settings/`.env`.
+     Explain that without keys, link checks still run (RDAP domain age + local
+     heuristics) and every verdict states which sources were skipped. Point to
+     `docs/credentials.md` for the exact steps. Never paste keys into chat —
+     have the user store them in Hermes settings/`.env`.
 
 3. **Verify the install** by running:
 

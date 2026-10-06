@@ -9,7 +9,14 @@ red_flags:
   - "Link bukan domain instansi resmi (*.go.id)"
 match:
   groups:
-    - ["bansos", "bantuan sosial", "subsidi", "bantuan pemerintah", "blt", "pkh"]
+    - [
+        "bansos",
+        "bantuan sosial",
+        "subsidi",
+        "bantuan pemerintah",
+        "blt",
+        "pkh",
+      ]
     - ["daftar", "klaim", "nik", "kk", "data diri", "cek penerima", "cair"]
   strength: strong
 impersonated_entities: ["Kementerian Keuangan", "Komdigi"]

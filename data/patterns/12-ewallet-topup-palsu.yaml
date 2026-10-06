@@ -10,7 +10,15 @@ red_flags:
 match:
   groups:
     - ["top up", "topup", "top-up", "saldo", "pulsa", "voucher"]
-    - ["murah", "diskon", "potongan", "50%", "promo", "lebih murah", "murah meriah"]
+    - [
+        "murah",
+        "diskon",
+        "potongan",
+        "50%",
+        "promo",
+        "lebih murah",
+        "murah meriah",
+      ]
   strength: strong
 impersonated_entities: ["DANA", "OVO", "GoPay", "ShopeePay", "LinkAja"]
 correct_response:

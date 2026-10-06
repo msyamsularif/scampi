@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from scampi import analysis, reports
+from scampi.core.checks import analysis
+from scampi.core.store import reports
 
 
 def _run(text, conn, settings):

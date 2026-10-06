@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from scampi import linkcheck
+from scampi.core.checks import linkcheck
 
 
 class _Url:
@@ -87,7 +87,7 @@ def test_urlhaus_all_failures_reported(conn, base_settings, monkeypatch):
 
 
 def test_rdap_domain_age_finding(conn, base_settings, monkeypatch):
-    from scampi import rdap
+    from scampi.core.checks import rdap
 
     monkeypatch.setattr(
         rdap,

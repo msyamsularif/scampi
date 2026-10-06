@@ -25,8 +25,9 @@ dev = [
 testpaths = ["tests"]
 # The plugin's __init__.py sits at the repository root — that is what makes the
 # repo installable with `hermes plugins install owner/repo` — and the root
-# directory is a Python package named "scampi". Keeping the conftest cutoff
-# inside tests/ stops pytest's collector chain at the test directory.
+# directory is a Python package named "scampi". The implementation lives in the
+# "core" subpackage, grouped by concern (checks, store, hermes, config). Keeping
+# the conftest cutoff inside tests/ stops pytest's collector chain there.
 addopts = "-q --confcutdir=tests"
 
 [tool.ruff]

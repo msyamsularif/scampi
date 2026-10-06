@@ -16,7 +16,7 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_DIR = Path(__file__).resolve().parent / "data" / "patterns"
+DEFAULT_DIR = Path(__file__).resolve().parents[2] / "data" / "patterns"
 
 REQUIRED_FIELDS = ("id", "name", "description", "red_flags", "match", "correct_response")
 _STRENGTHS = ("strong", "medium")

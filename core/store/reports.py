@@ -14,7 +14,8 @@ from collections.abc import Sequence
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
-from . import redaction, store
+from ..checks import redaction
+from . import store
 
 ENTITY_TYPES = ("account", "phone", "url", "domain")
 _ACCOUNT_RE = re.compile(r"^\d{8,20}$")
@@ -46,7 +47,7 @@ def normalize_value(entity_type: str, value: str) -> str:
         return digits
 
     if entity_type == "phone":
-        from . import extraction
+        from ..checks import extraction
 
         phones = extraction.find_phones(raw)
         if not phones:
@@ -56,20 +57,20 @@ def normalize_value(entity_type: str, value: str) -> str:
     if entity_type == "domain":
         host = raw.lower().strip().rstrip(".")
         if "://" in host:
-            from .domains import registrable_domain
-            from .extraction import _host_from_raw  # noqa: PLC2701 - shared parser
+            from ..checks.domains import registrable_domain
+            from ..checks.extraction import _host_from_raw  # noqa: PLC2701 - shared parser
 
             host = _host_from_raw(host)
             return registrable_domain(host)
         if not re.fullmatch(r"[a-z0-9.-]+\.[a-z]{2,24}", host):
             raise ReportError("domain tidak valid")
-        from .domains import registrable_domain
+        from ..checks.domains import registrable_domain
 
         return registrable_domain(host)
 
     # url -> store the registrable domain (the reportable unit for links)
-    from . import extraction
-    from .domains import registrable_domain
+    from ..checks import extraction
+    from ..checks.domains import registrable_domain
 
     urls = extraction.find_urls(raw)
     if not urls:

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from scampi.domains import levenshtein, registrable_domain
+from scampi.core.checks.domains import levenshtein, registrable_domain
 
 
 def test_registrable_domain_plain():

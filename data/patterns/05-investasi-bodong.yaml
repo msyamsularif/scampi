@@ -10,7 +10,15 @@ red_flags:
 match:
   groups:
     - ["investasi", "trading", "crypto", "kripto", "robot trading", "saham"]
-    - ["profit", "untung", "cuan", "keuntungan", "per bulan", "dijamin", "bunga tinggi"]
+    - [
+        "profit",
+        "untung",
+        "cuan",
+        "keuntungan",
+        "per bulan",
+        "dijamin",
+        "bunga tinggi",
+      ]
   strength: strong
 impersonated_entities: []
 correct_response:

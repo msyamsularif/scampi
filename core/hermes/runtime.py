@@ -20,7 +20,7 @@ import threading
 from pathlib import Path
 from typing import Any
 
-from . import config_file
+from ..config import config_file
 
 logger = logging.getLogger(__name__)
 

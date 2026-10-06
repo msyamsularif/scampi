@@ -10,7 +10,14 @@ red_flags:
 match:
   groups:
     - ["selamat", "undian", "beruntung", "menang"]
-    - ["hadiah", "uang tunai", "juta", "klaim", "ambil hadiah", "transfer hadiah"]
+    - [
+        "hadiah",
+        "uang tunai",
+        "juta",
+        "klaim",
+        "ambil hadiah",
+        "transfer hadiah",
+      ]
   strength: strong
 impersonated_entities: []
 correct_response:

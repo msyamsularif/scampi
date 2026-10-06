@@ -27,7 +27,7 @@ from .domains import levenshtein, registrable_domain
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_PATH = Path(__file__).resolve().parent / "data" / "allowlist.yaml"
+DEFAULT_PATH = Path(__file__).resolve().parents[2] / "data" / "allowlist.yaml"
 
 #: Aliases that are ordinary Indonesian words; match them case-sensitively so
 #: "dana darurat" or "si jago" never claims the brands.

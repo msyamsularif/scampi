@@ -14,9 +14,10 @@ import logging
 import uuid
 from typing import Any, Callable
 
-from . import analysis, identity, rate_limit, reports, store
-from . import settings as settings_mod
-from .about import __version__
+from ..about import __version__
+from ..checks import analysis
+from ..config import settings as settings_mod
+from ..store import identity, rate_limit, reports, store
 
 logger = logging.getLogger(__name__)
 

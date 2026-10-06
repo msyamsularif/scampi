@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import pytest
-from scampi import reports
+from scampi.core.store import reports
 
 
 def _settings(**overrides):

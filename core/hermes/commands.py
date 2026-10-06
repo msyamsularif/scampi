@@ -13,11 +13,12 @@ import os
 from pathlib import Path
 from typing import Any
 
-from . import eval as eval_mod
-from . import patterns as patterns_mod
-from . import reports, runtime, store
-from . import settings as settings_mod
-from .about import __version__
+from ..about import __version__
+from ..checks import eval as eval_mod
+from ..checks import patterns as patterns_mod
+from ..config import settings as settings_mod
+from ..store import reports, store
+from . import runtime
 
 _STATUS_HELP = "Perintah: /scampi status (kesehatan layanan) atau /scampi help."
 

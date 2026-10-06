@@ -10,7 +10,14 @@ red_flags:
 match:
   groups:
     - ["pln", "listrik", "token listrik"]
-    - ["menunggak", "pemutusan", "diputus", "denda", "terlambat", "link pembayaran"]
+    - [
+        "menunggak",
+        "pemutusan",
+        "diputus",
+        "denda",
+        "terlambat",
+        "link pembayaran",
+      ]
   strength: strong
 impersonated_entities: ["PLN"]
 correct_response:

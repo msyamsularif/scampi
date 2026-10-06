@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from scampi import eval as eval_mod
+from scampi.core.checks import eval as eval_mod
 
 
 def test_scam_corpus_meets_recall_target(corpus_dir):

@@ -6,17 +6,17 @@
 # requires a code change.
 
 weights:
-  blocklist_hit: 8.0          # listed in a trusted threat source
-  apk_link: 7.0               # link serves an APK
-  account_confirmed: 7.0      # >=3 independent reporters + evidence
-  brand_mismatch: 5.0         # claims a brand, domain is not official
-  typosquat: 5.0              # domain resembles an official one
-  young_domain: 5.0           # domain younger than young_domain_days
-  otp_pin_request: 5.0        # asks for OTP/PIN/card data
-  pattern_match_strong: 4.0   # strong match with a curated pattern
-  account_reported: 3.0       # reported, not yet community-confirmed
+  blocklist_hit: 8.0 # listed in a trusted threat source
+  apk_link: 7.0 # link serves an APK
+  account_confirmed: 7.0 # >=3 independent reporters + evidence
+  brand_mismatch: 5.0 # claims a brand, domain is not official
+  typosquat: 5.0 # domain resembles an official one
+  young_domain: 5.0 # domain younger than young_domain_days
+  otp_pin_request: 5.0 # asks for OTP/PIN/card data
+  pattern_match_strong: 4.0 # strong match with a curated pattern
+  account_reported: 3.0 # reported, not yet community-confirmed
   pattern_match_medium: 2.0
-  pressure_language: 2.0      # urgency/threat wording, 2+ markers
+  pressure_language: 2.0 # urgency/threat wording, 2+ markers
   risky_tld: 1.5
   url_shortener: 1.5
 

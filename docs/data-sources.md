@@ -1,14 +1,14 @@
 # Sumber data
 
-Semua sumber jaringan bersifat *read-only* terhadap data target dan berjalan
+Semua sumber jaringan bersifat _read-only_ terhadap data target dan berjalan
 dengan timeout masing-masing. Kegagalan satu sumber tidak menggagalkan
 verdict — nilainya digantikan catatan "tidak terjangkau/di-skip".
 
-| Sumber | Menjawab | Auth | Tanpa kunci / gagal |
-|---|---|---|---|
-| RDAP (`rdap.org`) | Umur domain (tanggal registrasi) | tanpa kunci | status "tidak terjangkau"; verdict menyebut RDAP gagal |
-| Google Safe Browsing v4 | URL ada di daftar ancaman Google? | `SAFE_BROWSING_API_KEY` | sumber di-skip + catatan |
-| abuse.ch URLhaus | URL pernah dilaporkan malware/phishing? | `URLHAUS_AUTH_KEY` | sumber di-skip + catatan |
+| Sumber                  | Menjawab                                | Auth                    | Tanpa kunci / gagal                                    |
+| ----------------------- | --------------------------------------- | ----------------------- | ------------------------------------------------------ |
+| RDAP (`rdap.org`)       | Umur domain (tanggal registrasi)        | tanpa kunci             | status "tidak terjangkau"; verdict menyebut RDAP gagal |
+| Google Safe Browsing v4 | URL ada di daftar ancaman Google?       | `SAFE_BROWSING_API_KEY` | sumber di-skip + catatan                               |
+| abuse.ch URLhaus        | URL pernah dilaporkan malware/phishing? | `URLHAUS_AUTH_KEY`      | sumber di-skip + catatan                               |
 
 ## Catatan privasi & kepatuhan
 
@@ -22,7 +22,7 @@ verdict — nilainya digantikan catatan "tidak terjangkau/di-skip".
 - Kuota, lisensi, dan ToS tiap penyedia **wajib diverifikasi ulang** sebelum
   pemakaian produksi (catatan spec §7.1).
 - urlscan.io / sandbox browser ditunda (post-MVP); struktur adapter sudah
-  disiapkan di `linkcheck.py`.
+  disiapkan di `core/checks/linkcheck.py`.
 
 ## Degradasi yang dijanjikan
 

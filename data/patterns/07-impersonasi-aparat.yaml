@@ -10,8 +10,27 @@ red_flags:
   - "Nada mengancam dengan tenggat waktu"
 match:
   groups:
-    - ["ojk", "polri", "polda", "polres", "kepolisian", "bssn", "komdigi", "kominfo", "bank indonesia"]
-    - ["tersangka", "kasus", "melanggar", "denda", "tindak pidana", "penahanan", "panggilan", "laporan polisi"]
+    - [
+        "ojk",
+        "polri",
+        "polda",
+        "polres",
+        "kepolisian",
+        "bssn",
+        "komdigi",
+        "kominfo",
+        "bank indonesia",
+      ]
+    - [
+        "tersangka",
+        "kasus",
+        "melanggar",
+        "denda",
+        "tindak pidana",
+        "penahanan",
+        "panggilan",
+        "laporan polisi",
+      ]
   strength: strong
 impersonated_entities: ["OJK", "Polri", "Komdigi", "Bank Indonesia"]
 correct_response:

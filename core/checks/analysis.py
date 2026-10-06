@@ -15,8 +15,9 @@ import re
 from collections.abc import Sequence
 from typing import Any
 
+from ..store import reports, store
 from . import allowlist as allowlist_mod
-from . import extraction, linkcheck, reports, scoring, store, verdict
+from . import extraction, linkcheck, scoring, verdict
 from . import patterns as patterns_mod
 from .scoring import Signal
 

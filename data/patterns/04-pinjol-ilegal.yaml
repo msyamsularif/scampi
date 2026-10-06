@@ -9,8 +9,23 @@ red_flags:
   - "Tidak ada nama lembaga berizin OJK"
 match:
   groups:
-    - ["pinjaman", "pinjam", "pinjol", "dana tunai", "kredit cepat", "modal usaha"]
-    - ["tanpa jaminan", "cepat cair", "cair dalam", "bunga rendah", "langsung cair", "tanpa syarat", "limit besar"]
+    - [
+        "pinjaman",
+        "pinjam",
+        "pinjol",
+        "dana tunai",
+        "kredit cepat",
+        "modal usaha",
+      ]
+    - [
+        "tanpa jaminan",
+        "cepat cair",
+        "cair dalam",
+        "bunga rendah",
+        "langsung cair",
+        "tanpa syarat",
+        "limit besar",
+      ]
   strength: strong
 impersonated_entities: []
 correct_response:

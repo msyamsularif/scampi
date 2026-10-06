@@ -36,8 +36,8 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from . import commands, hooks, schemas, tools
-from .about import __version__
+from .core.about import __version__
+from .core.hermes import commands, hooks, schemas, tools
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +57,7 @@ def register(ctx) -> None:  # noqa: ANN001 - PluginContext is host-provided
     Called exactly once at startup. Any exception here disables the plugin but
     leaves Hermes itself running.
     """
-    from . import runtime
+    from .core.hermes import runtime
 
     runtime.bind(ctx)
 

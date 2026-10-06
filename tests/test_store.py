@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from scampi import store
+from scampi.core.store import store
 
 
 def test_connect_is_idempotent():

@@ -22,7 +22,8 @@ import logging
 from datetime import datetime, timezone
 from typing import Any
 
-from . import redaction, runtime
+from ..checks import redaction
+from . import runtime
 
 logger = logging.getLogger(__name__)
 

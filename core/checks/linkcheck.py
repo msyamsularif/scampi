@@ -23,7 +23,7 @@ import urllib.request
 from collections.abc import Iterable
 from typing import Any
 
-from . import store
+from ..store import store
 
 logger = logging.getLogger(__name__)
 

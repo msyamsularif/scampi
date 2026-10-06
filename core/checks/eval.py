@@ -13,8 +13,9 @@ import sqlite3
 from pathlib import Path
 from typing import Any
 
-from . import analysis, store
-from . import settings as settings_mod
+from ..config import settings as settings_mod
+from ..store import store
+from . import analysis
 
 _MAX_REPORTED_CASES = 10
 

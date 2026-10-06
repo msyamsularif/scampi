@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from scampi import allowlist
+from scampi.core.checks import allowlist
 
 
 def test_find_brands_boundary():

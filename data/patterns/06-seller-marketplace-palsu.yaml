@@ -9,7 +9,13 @@ red_flags:
   - "Tidak mau COD atau marketplace resmi"
 match:
   groups:
-    - ["bayar dulu", "transfer dulu", "dp dulu", "transfer ke rekening", "bayar ke rekening"]
+    - [
+        "bayar dulu",
+        "transfer dulu",
+        "dp dulu",
+        "transfer ke rekening",
+        "bayar ke rekening",
+      ]
     - ["a.n", "a/n", "atas nama", "rekber"]
   strength: strong
 impersonated_entities: []

@@ -17,7 +17,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT.parent) not in sys.path:
     sys.path.insert(0, str(ROOT.parent))
 
-from scampi import runtime, store  # noqa: E402
+from scampi.core.hermes import runtime  # noqa: E402
+from scampi.core.store import store  # noqa: E402
 
 FIXTURES = ROOT / "tests" / "fixtures"
 
@@ -43,7 +44,7 @@ def conn():
 
 @pytest.fixture()
 def base_settings():
-    from scampi import settings as settings_mod
+    from scampi.core.config import settings as settings_mod
 
     config = settings_mod.load()
     config["network_enabled"] = False

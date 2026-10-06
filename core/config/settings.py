@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from . import runtime
+from ..hermes import runtime
 
 
 def load() -> dict[str, Any]:

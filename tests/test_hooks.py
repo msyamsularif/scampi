@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from scampi import hooks, runtime
+from scampi.core.hermes import hooks, runtime
 
 
 def test_trigger_detection():

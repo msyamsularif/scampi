@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import argparse
 
-from scampi import commands
+from scampi.core.hermes import commands
 
 
 def test_status_text_mentions_health_and_counts():

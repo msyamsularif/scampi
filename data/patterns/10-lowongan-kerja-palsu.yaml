@@ -10,7 +10,15 @@ red_flags:
 match:
   groups:
     - ["loker", "lowongan", "kerja", "karyawan", "admin online", "staff"]
-    - ["biaya administrasi", "biaya pendaftaran", "bayar biaya", "setoran", "registrasi", "tanpa interview", "langsung kerja"]
+    - [
+        "biaya administrasi",
+        "biaya pendaftaran",
+        "bayar biaya",
+        "setoran",
+        "registrasi",
+        "tanpa interview",
+        "langsung kerja",
+      ]
   strength: strong
 impersonated_entities: []
 correct_response:

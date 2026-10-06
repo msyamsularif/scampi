@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from scampi import extraction, rules
+from scampi.core.checks import extraction, rules
 
 
 def test_find_urls_scheme_and_bare():

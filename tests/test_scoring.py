@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from scampi import scoring
+from scampi.core.checks import scoring
 
 
 def test_total_sums_weights():

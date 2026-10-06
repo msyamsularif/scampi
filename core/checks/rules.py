@@ -15,7 +15,7 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_PATH = Path(__file__).resolve().parent / "data" / "rules.yaml"
+DEFAULT_PATH = Path(__file__).resolve().parents[2] / "data" / "rules.yaml"
 
 DEFAULTS: dict[str, Any] = {
     "weights": {

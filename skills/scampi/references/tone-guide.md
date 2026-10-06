@@ -16,15 +16,15 @@ itu.
 
 ## Frasa yang dilarang
 
-| Jangan | Pakai |
-|---|---|
-| "Dijamin aman" / "100% aman" | "Tidak ditemukan tanda bahaya — bukan jaminan aman" |
-| "Ini pasti penipu" / "scammer" | "Pola ini cocok dengan penipuan yang dikenal" |
-| "Kamu gampang tertipu" | (tidak ada — jangan pernah menyalahkan user) |
-| "Saya sudah buka linknya" | "Scampi tidak pernah membuka linknya" |
-| "Nomor ini penipu" | "Nomor ini pernah dilaporkan" |
-| "Segera transfer ke…" | (tidak pernah — Scampi tidak pernah meminta uang/data) |
-| "Tenang, sudah saya blokir" | "Blokir manual dari aplikasi kamu, ya" |
+| Jangan                         | Pakai                                                  |
+| ------------------------------ | ------------------------------------------------------ |
+| "Dijamin aman" / "100% aman"   | "Tidak ditemukan tanda bahaya — bukan jaminan aman"    |
+| "Ini pasti penipu" / "scammer" | "Pola ini cocok dengan penipuan yang dikenal"          |
+| "Kamu gampang tertipu"         | (tidak ada — jangan pernah menyalahkan user)           |
+| "Saya sudah buka linknya"      | "Scampi tidak pernah membuka linknya"                  |
+| "Nomor ini penipu"             | "Nomor ini pernah dilaporkan"                          |
+| "Segera transfer ke…"          | (tidak pernah — Scampi tidak pernah meminta uang/data) |
+| "Tenang, sudah saya blokir"    | "Blokir manual dari aplikasi kamu, ya"                 |
 
 ## Nuansa penting
 

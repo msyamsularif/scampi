@@ -6,7 +6,7 @@ import io
 import json
 import urllib.error
 
-from scampi import rdap
+from scampi.core.checks import rdap
 
 
 class _FakeResponse(io.BytesIO):

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from scampi import redaction
+from scampi.core.checks import redaction
 
 
 def test_nik_masked():

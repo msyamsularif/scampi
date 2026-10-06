@@ -11,34 +11,34 @@ basis pola penipuan Indonesia yang dikurasi, dan laporan komunitas.
 
 ## Fitur (MVP v1)
 
-| ID | Fitur |
-|---|---|
-| F1 | Cek pesan teks (termasuk pesan diteruskan) |
-| F2 | Cek link: Google Safe Browsing, URLhaus, umur domain (RDAP), heuristik lokal |
-| F3 | Cek screenshot (via vision Hermes → transkripsi → F1) |
-| F4 | Cek rekening/nomor: basis laporan komunitas ("pernah dilaporkan", bukan "penipu") |
-| F5 | Verdict 3 tingkat — tidak ditemukan tanda bahaya / perlu hati-hati / kemungkinan besar penipuan |
-| F6 | Panduan tindakan per pola penipuan |
-| F7 | Lapor penipuan (dengan referensi bukti) |
-| F8 | Feedback akurasi verdict lewat bahasa natural |
+| ID  | Fitur                                                                                           |
+| --- | ----------------------------------------------------------------------------------------------- |
+| F1  | Cek pesan teks (termasuk pesan diteruskan)                                                      |
+| F2  | Cek link: Google Safe Browsing, URLhaus, umur domain (RDAP), heuristik lokal                    |
+| F3  | Cek screenshot (via vision Hermes → transkripsi → F1)                                           |
+| F4  | Cek rekening/nomor: basis laporan komunitas ("pernah dilaporkan", bukan "penipu")               |
+| F5  | Verdict 3 tingkat — tidak ditemukan tanda bahaya / perlu hati-hati / kemungkinan besar penipuan |
+| F6  | Panduan tindakan per pola penipuan                                                              |
+| F7  | Lapor penipuan (dengan referensi bukti)                                                         |
+| F8  | Feedback akurasi verdict lewat bahasa natural                                                   |
 
 ## Cara verdict dibentuk
 
 Setiap sinyal menyumbang bobot (lihat `data/rules.yaml`); totalnya jatuh ke
 ambang batas yang bisa diatur:
 
-| Sinyal | Bobot |
-|---|---|
-| Link terdaftar di daftar blokir (Safe Browsing / URLhaus) | 8 |
-| Link mengarah ke file APK | 7 |
-| Rekening/nomor dilaporkan ≥3 pengguna independen + bukti | 7 |
-| Mengaku brand, domain bukan milik resmi / typosquatting | 5 |
-| Domain berumur < 30 hari | 5 |
-| Meminta OTP/PIN/data kartu | 5 |
-| Cocok pola penipuan kuat | 4 |
-| Pernah dilaporkan (belum terverifikasi) | 3 |
-| Bahasa mendesak/ancaman (2+ penanda) | 2 |
-| TLD berisiko / URL shortener | 1.5 |
+| Sinyal                                                    | Bobot |
+| --------------------------------------------------------- | ----- |
+| Link terdaftar di daftar blokir (Safe Browsing / URLhaus) | 8     |
+| Link mengarah ke file APK                                 | 7     |
+| Rekening/nomor dilaporkan ≥3 pengguna independen + bukti  | 7     |
+| Mengaku brand, domain bukan milik resmi / typosquatting   | 5     |
+| Domain berumur < 30 hari                                  | 5     |
+| Meminta OTP/PIN/data kartu                                | 5     |
+| Cocok pola penipuan kuat                                  | 4     |
+| Pernah dilaporkan (belum terverifikasi)                   | 3     |
+| Bahasa mendesak/ancaman (2+ penanda)                      | 2     |
+| TLD berisiko / URL shortener                              | 1.5   |
 
 Ambang default: **≥3 perlu hati-hati**, **≥6 kemungkinan besar penipuan**.
 Semua bisa dikalibrasi ulang lewat harness evaluasi (lihat
@@ -112,16 +112,24 @@ Metrik seed corpus saat ini: **scam recall 100% (20/20), false positive 0%
 ```
 plugin.yaml            Manifest Hermes (tools, hooks, settings, env opsional)
 __init__.py            register(ctx): tools, hooks, middleware, commands, skill
-analysis.py            Orkestrasi: ekstraksi → sinyal → skor → payload verdict
-extraction.py          URL/telepon/rekening/penanda teks (deterministik)
-redaction.py           Redaksi OTP/PIN/NIK/kartu (satu implementasi bersama)
-allowlist.py           Cocokkan brand vs domain resmi (typosquat & mismatch)
-patterns.py            Muat/validasi/match pola penipuan YAML
-scoring.py, verdict.py Bobot, ambang, teks verdict Bahasa Indonesia
-store.py, reports.py   SQLite: laporan, bukti, feedback, cache, rate limit
-linkcheck.py, rdap.py  Provider jaringan dengan timeout + degradasi
-hooks.py               Skill pointer, audit, middleware redaksi
-commands.py, eval.py   /scampi status + CLI operator + harness evaluasi
+core/checks/           Mesin deteksi deterministik
+  analysis.py          Orkestrasi: ekstraksi → sinyal → skor → payload verdict
+  extraction.py        URL/telepon/rekening/penanda teks (deterministik)
+  redaction.py         Redaksi OTP/PIN/NIK/kartu (satu implementasi bersama)
+  allowlist.py         Cocokkan brand vs domain resmi (typosquat & mismatch)
+  patterns.py          Muat/validasi/match pola penipuan YAML
+  rules.py             Aturan skor dari rules.yaml
+  scoring.py           Bobot, ambang, dan sinyal penilaian
+  verdict.py           Teks verdict Bahasa Indonesia
+  domains.py           Utilitas domain (registrable domain, edit distance)
+  linkcheck.py, rdap.py Provider jaringan dengan timeout + degradasi
+  eval.py              Harness evaluasi korpus
+core/store/            SQLite: laporan, bukti, feedback, cache, rate limit
+  store.py, reports.py, identity.py, rate_limit.py
+core/config/           Resolusi pengaturan: settings.py, config_file.py
+core/hermes/           Glue host Hermes
+  tools.py, hooks.py, commands.py, runtime.py, schemas.py
+core/about.py          Sumber tunggal versi plugin
 data/                   rules.yaml, allowlist.yaml, patterns/*.yaml
 skills/scampi/          SKILL.md + referensi (template, nada, glosarium)
 tests/                  105 tes + korpus 20 scam / 20 legit
