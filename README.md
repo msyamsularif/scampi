@@ -139,6 +139,19 @@ tests/                 105 tests + corpus of 20 scam / 20 legit
 docs/                  Installation, configuration, credentials, curation, privacy, ops
 ```
 
+## Language conventions
+
+- **Documentation and code are written in English** — README, `docs/`, the
+  specification, manifests, code comments, and commit messages.
+- **User-facing output stays in Bahasa Indonesia** — verdicts, reasons,
+  actions, and tool payloads are what Indonesian users read, so they are not
+  translated.
+- **Example cases may stay in Bahasa Indonesia** — sample scam messages,
+  example verdicts, and quoted phrases mirror real Indonesian cases, so they
+  keep their original language.
+- **Indonesian-specific identifiers stay as-is** — e.g. the scam pattern
+  files under `data/patterns/`, such as `03-bank-akun-diblokir.yaml`.
+
 ## License
 
 MIT — see `LICENSE`.

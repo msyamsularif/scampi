@@ -1,7 +1,8 @@
-# Template verdict Scampi (Bahasa Indonesia)
+# Scampi verdict templates (Bahasa Indonesia)
 
-Contoh jadi untuk ditiru strukturnya. **Selalu** ambil isi dari payload tool —
-template ini hanya menunjukkan bentuk, bukan pengganti data.
+Ready-made examples to copy the structure from. **Always** take the content
+from the tool payload — these templates only show the shape, they are not a
+substitute for the data.
 
 ## 1. Likely scam — link phishing bank
 
@@ -24,7 +25,7 @@ Catatan: Ini penilaian otomatis dari sinyal yang tersedia — bukan keputusan
 hukum. "Tidak ditemukan tanda bahaya" bukan jaminan bahwa pesan itu aman.
 ```
 
-## 2. Caution — rekening pernah dilaporkan (belum terverifikasi)
+## 2. Caution — account has been reported (not yet verified)
 
 ```
 ⚠️ Perlu hati-hati
@@ -41,7 +42,7 @@ Catatan: 1 laporan saja belum tentu benar — pastikan dulu sebelum menyimpulkan
 Ini penilaian otomatis, bukan keputusan hukum.
 ```
 
-## 3. Tidak ditemukan tanda bahaya — promo resmi
+## 3. No red flags found — legitimate promo
 
 ```
 ✅ Tidak ditemukan tanda bahaya
@@ -57,9 +58,9 @@ Catatan: Ini penilaian otomatis dari sinyal yang tersedia — bukan keputusan
 hukum.
 ```
 
-## 4. Dengan sumber yang tidak aktif (degradasi)
+## 4. With inactive sources (degradation)
 
-Sebutkan apa adanya, satu baris per sumber:
+State them verbatim, one line per source:
 
 ```
 Catatan: Google Safe Browsing tidak aktif (API key belum diisi), jadi link
@@ -68,7 +69,7 @@ tidak dicek ke daftar blokir Google. URLhaus dan umur domain tetap diperiksa.
 
 ## 5. Screenshot
 
-Awali dengan menyebut sumbernya:
+Start by naming the source:
 
 ```
 Saya baca dari gambar yang kamu kirim. Screenshot berisi pesan yang mengaku
@@ -78,7 +79,7 @@ dari kurir "JNE" dan satu link.
 ...
 ```
 
-## 6. Laporan tercatat
+## 6. Report recorded
 
 ```
 Laporan tercatat untuk rekening ****7890 (status: belum terverifikasi).

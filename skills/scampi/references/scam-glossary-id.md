@@ -1,28 +1,31 @@
-# Glosarium penipuan Indonesia (untuk konteks)
+# Indonesian scam glossary (for context)
 
-Istilah yang sering muncul saat user bercerita. Pakai untuk memahami, bukan
-untuk menambah fakta ke verdict.
+Terms that often come up when users tell their story. Use them to understand,
+never to add facts to a verdict.
 
-- **APK (modus undangan):** file aplikasi Android yang dikirim lewat chat
-  (undangan pernikahan, kurir, tagihan). Setelah dipasang, mencuri SMS/OTP.
-- **Rekber (rekening bersama):** jasa perantara transfer. Sering dipalsukan di
-  jual-beli online.
-- **DP (down payment):** uang muka. Modus klasik: "DP dulu" ke rekening
-  pribadi, barang tidak dikirim.
-- **Pinjol:** pinjaman online. Ilegal jika tidak berizin OJK; sering meneror
-  kontak saat menagih.
-- **Bodong:** palsu (investasi bodong = skema investasi penipuan).
-- **Modus:** pola/cara penipuan beroperasi.
-- **COD:** bayar di tempat. Aman hanya bila benar-benar bertemu barangnya.
-- **M-banking / SMS banking:** kanal bank resmi. Penipu meniru tampilannya.
-- **OTP:** kode sekali pakai dari bank. **Tidak pernah** boleh dibagikan.
-- **Phishing:** situs tiruan untuk mencuri username/password/OTP.
-- **Typosquatting:** domain yang menyerupai domain resmi (klikbca → klik-bca).
-- **Bansos:** bantuan sosial. Modus: "bantuan cair, daftar lewat link".
-- **BLT/PKH:** program bantuan pemerintah yang sering dijadikan kedok.
-- **Robocall/spoofing:** penelepon memalsukan nomor institusi.
-- **Loker (lowongan kerja):** modus "biaya administrasi" atau "tugas belanja
-  dulu" di awal.
-- **Klaim hadiah:** modus undian yang tidak pernah diikuti.
-- **AduanNomor / aduankonten:** kanal pelaporan spam/penipuan (Komdigi).
-- **OJK 157:** kanal kontak resmi Otoritas Jasa Keuangan.
+- **APK (undangan modus):** an Android app file sent over chat (wedding
+  invitations, couriers, bills). Once installed, it steals SMS/OTP.
+- **Rekber (rekening bersama):** an escrow-style transfer middleman service.
+  Often faked in online marketplaces.
+- **DP (down payment):** money paid up front. Classic modus: "DP dulu" (pay the
+  down payment first) to a personal account, goods never shipped.
+- **Pinjol:** online lending. Illegal without an OJK license; often harasses
+  contacts when collecting.
+- **Bodong:** fake (investasi bodong = fraudulent investment scheme).
+- **Modus:** the pattern or method a scam operates by.
+- **COD:** cash on delivery. Safe only when you actually receive the goods.
+- **M-banking / SMS banking:** official bank channels. Scammers copy their
+  look.
+- **OTP:** a one-time code from the bank. **Never** to be shared.
+- **Phishing:** a fake site that steals username/password/OTP.
+- **Typosquatting:** a domain resembling an official one (klikbca → klik-bca).
+- **Bansos:** social aid. Modus: "bantuan cair, daftar lewat link" (aid
+  disbursed, register via link).
+- **BLT/PKH:** government aid programs often used as a cover story.
+- **Robocall/spoofing:** a caller faking an institution's number.
+- **Loker (lowongan kerja):** modus of "administration fee" or "shop first as a
+  task" at the start.
+- **Klaim hadiah:** prize-claim modus for a draw the user never entered.
+- **AduanNomor / aduankonten:** spam/scam reporting channels (Komdigi).
+- **OJK 157:** the official contact channel of Indonesia's financial services
+  authority.
