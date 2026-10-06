@@ -18,7 +18,7 @@ from typing import Any
 logger = logging.getLogger(__name__)
 
 RDAP_URL = "https://rdap.org/domain/{domain}"
-USER_AGENT = "scampi-hermes-plugin/0.1 (+https://github.com/msyamsularif/scampi-hermes-plugin)"
+USER_AGENT = "scampi/1.0.0 (+https://github.com/msyamsularif/scampi)"
 
 
 @dataclass

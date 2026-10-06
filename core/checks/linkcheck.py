@@ -27,7 +27,7 @@ from ..store import store
 
 logger = logging.getLogger(__name__)
 
-USER_AGENT = "scampi-hermes-plugin/0.1 (+https://github.com/msyamsularif/scampi-hermes-plugin)"
+USER_AGENT = "scampi/1.0.0 (+https://github.com/msyamsularif/scampi)"
 
 SAFE_BROWSING_URL = "https://safebrowsing.googleapis.com/v4/threatMatches:find?key={key}"
 URLHAUS_URL = "https://urlhaus-api.abuse.ch/v1/url/"
@@ -105,7 +105,7 @@ def _safe_browsing(urls, timeout, ttl, conn, findings, sources, notes) -> None:
     error: ProviderError | None = None
     if missing:
         body = {
-            "client": {"clientId": "scampi-hermes-plugin", "clientVersion": "0.1.0"},
+            "client": {"clientId": "scampi", "clientVersion": "1.0.0"},
             "threatInfo": {
                 "threatTypes": _THREAT_TYPES,
                 "platformTypes": ["ANY_PLATFORM"],

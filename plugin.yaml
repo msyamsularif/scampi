@@ -9,7 +9,7 @@ manifest_version: 2
 api_version: 1
 
 name: scampi
-version: 0.1.0
+version: 1.0.0
 
 description: >-
   Scam detector for Indonesia. Users forward suspicious messages, links,
@@ -21,7 +21,7 @@ description: >-
 
 author: Scampi
 license: MIT
-homepage: https://github.com/msyamsularif/scampi-hermes-plugin
+homepage: https://github.com/msyamsularif/scampi
 tags:
   - scam
   - fraud

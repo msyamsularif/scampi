@@ -1,6 +1,6 @@
 [project]
 name = "scampi-hermes-plugin"
-version = "0.1.0"
+version = "1.0.0"
 description = "Hermes Agent plugin: scam detector for Indonesia (messages, links, accounts, screenshots)"
 readme = "README.md"
 requires-python = ">=3.9"
